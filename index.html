@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bazar Ohkubo — Cosméticos e Bijouterias | Palmas-TO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --preto:#070503;
+  --preto2:#0E0B07;
+  --carvao:#171209;
+  --ouro:#D4A437;
+  --ouro-claro:#F0CE6B;
+  --ouro-vivo:#FFD978;
+  --ouro-escuro:#8C6B1E;
+  --creme:#F5EDDB;
+  --creme2:#B9AC8C;
+  --display:'Abril Fatface',serif;
+  --corpo:'Space Grotesk',sans-serif;
+  --glow:0 0 24px rgba(212,164,55,.45),0 0 60px rgba(212,164,55,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
+a:visited{color:inherit}
+html{scroll-behavior:smooth}
+body{
+  background:var(--preto);
+  color:var(--creme);
+  font-family:var(--corpo);
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:default;
+}
+::selection{background:var(--ouro);color:var(--preto)}
+
+/* ============ LUZ QUE SEGUE O CURSOR ============ */
+#cursorLight{
+  position:fixed;top:0;left:0;width:520px;height:520px;
+  pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(212,164,55,.09) 0%,rgba(212,164,55,.03) 40%,transparent 70%);
+  transform:translate(-50%,-50%);
+  transition:opacity .4s;
+}
+@media (hover:none){#cursorLight{display:none}}
+
+/* ============ UTIL ============ */
+.container{max-width:1180px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+.eyebrow{
+  font-size:.7rem;font-weight:500;letter-spacing:.46em;text-transform:uppercase;color:var(--ouro);
+  display:flex;align-items:center;gap:16px;
+}
+.eyebrow::before{content:'';width:44px;height:1px;background:linear-gradient(90deg,var(--ouro),transparent);box-shadow:0 0 8px rgba(212,164,55,.8)}
+h2{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(2rem,4.4vw,3.2rem);line-height:1.12;margin-top:18px;
+}
+h2 em{font-style:normal;color:var(--ouro);text-shadow:0 0 30px rgba(212,164,55,.4)}
+.section{padding:120px 0;position:relative}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  *{animation:none!important;transition:none!important}
+  #cursorLight,#particles{display:none}
+}
+
+/* ============ NAV ============ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;
+  transition:.4s;border-bottom:1px solid transparent;
+}
+nav.scrolled{
+  background:rgba(7,5,3,.88);backdrop-filter:blur(16px);padding:12px 0;
+  border-bottom-color:rgba(212,164,55,.22);
+  box-shadow:0 4px 40px rgba(0,0,0,.6);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.logo-nav{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo-nav svg{width:36px;height:36px;filter:drop-shadow(0 0 6px rgba(212,164,55,.55))}
+.logo-nav-text{font-family:var(--display);font-size:1rem;letter-spacing:.1em;line-height:1;
+  background:linear-gradient(180deg,var(--ouro-vivo),var(--ouro) 55%,var(--ouro-escuro));
+  -webkit-background-clip:text;background-clip:text;color:transparent;text-transform:uppercase}
+.logo-nav-text small{display:block;font-family:var(--corpo);font-weight:400;font-size:.46rem;letter-spacing:.42em;color:var(--creme2);margin-top:5px;-webkit-text-fill-color:var(--creme2)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  color:var(--creme);text-decoration:none;font-size:.74rem;font-weight:400;
+  letter-spacing:.24em;text-transform:uppercase;position:relative;padding:4px 0;transition:.3s;
+}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--ouro);box-shadow:0 0 10px var(--ouro);transition:width .35s}
+.nav-links a:hover{color:var(--ouro-claro);text-shadow:0 0 16px rgba(212,164,55,.6)}
+.nav-links a:hover::after{width:100%}
+.nav-insta{
+  display:flex;align-items:center;gap:9px;
+  font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--preto);background:linear-gradient(135deg,var(--ouro-claro),var(--ouro));
+  padding:11px 22px;text-decoration:none;position:relative;overflow:hidden;transition:.3s;
+}
+.nav-insta::before{
+  content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-20deg);transition:left .55s;
+}
+.nav-insta:hover::before{left:130%}
+.nav-insta:hover{box-shadow:var(--glow)}
+.menu-btn{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;z-index:101}
+.menu-btn span{width:24px;height:1.5px;background:var(--ouro);box-shadow:0 0 6px rgba(212,164,55,.7)}
+
+/* ============ HERO ============ */
+.hero{
+  min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;
+  position:relative;text-align:center;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 38%,rgba(212,164,55,.13),transparent 70%),
+    var(--preto);
+  overflow:hidden;
+}
+.hero::before{ /* malha futurista */
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(212,164,55,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(212,164,55,.05) 1px,transparent 1px);
+  background-size:70px 70px;
+  mask-image:radial-gradient(ellipse 75% 65% at 50% 42%,#000 25%,transparent 72%);
+  animation:gridMove 16s linear infinite;
+}
+@keyframes gridMove{to{background-position:70px 70px}}
+.hero::after{ /* linha de horizonte */
+  content:'';position:absolute;left:0;right:0;top:62%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,164,55,.5),transparent);
+  box-shadow:0 0 30px rgba(212,164,55,.35);
+  opacity:.5;
+}
+#particles{position:absolute;inset:0;pointer-events:none}
+
+/* ====== LOGO RECRIADO (fiel à marca) ====== */
+.hero-logo{position:relative;z-index:3;animation:heroIn 1.4s cubic-bezier(.22,1,.36,1) both}
+@keyframes heroIn{from{opacity:0;transform:translateY(40px) scale(.96)}to{opacity:1;transform:none}}
+.marca{display:flex;flex-direction:column;align-items:center;gap:0}
+.marca-spiral{width:108px;height:108px;margin-bottom:8px;position:relative}
+.marca-spiral svg{width:100%;height:100%;overflow:visible}
+.marca-spiral .traco{
+  fill:none;stroke:url(#gradOuro);stroke-width:9;stroke-linecap:round;
+  stroke-dasharray:1400;stroke-dashoffset:1400;
+  animation:desenha 2.6s .4s cubic-bezier(.4,0,.2,1) forwards;
+  filter:drop-shadow(0 0 14px rgba(212,164,55,.6));
+}
+@keyframes desenha{to{stroke-dashoffset:0}}
+.marca h1{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(3rem,9vw,5.6rem);
+  line-height:.96;letter-spacing:.02em;text-transform:uppercase;
+  background:linear-gradient(180deg,var(--ouro-vivo) 0%,var(--ouro) 52%,var(--ouro-escuro) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 30px rgba(212,164,55,.3));
+}
+.marca .sub{
+  margin-top:18px;
+  font-size:clamp(.62rem,1.6vw,.82rem);font-weight:400;
+  letter-spacing:.58em;text-transform:uppercase;color:var(--creme);
+  text-indent:.58em;
+}
+.marca .selo{
+  margin-top:22px;
+  font-weight:600;font-size:.76rem;letter-spacing:.34em;text-transform:uppercase;text-indent:.34em;
+  color:var(--preto);
+  background:linear-gradient(180deg,var(--ouro-claro),var(--ouro));
+  padding:9px 30px;border-radius:100px;
+  box-shadow:0 0 26px rgba(212,164,55,.45);
+  animation:pulseSelo 3.4s ease-in-out infinite;
+}
+@keyframes pulseSelo{0%,100%{box-shadow:0 0 22px rgba(212,164,55,.35)}50%{box-shadow:0 0 44px rgba(212,164,55,.65)}}
+.hero-rating{
+  margin-top:40px;display:inline-flex;align-items:center;gap:14px;
+  border:1px solid rgba(212,164,55,.35);padding:13px 26px;border-radius:100px;
+  background:rgba(14,11,7,.6);backdrop-filter:blur(8px);
+  font-size:.82rem;letter-spacing:.08em;color:var(--creme2);
+  animation:heroIn 1.4s .5s both;
+}
+.hero-rating .nota{font-family:var(--display);font-size:1.25rem;color:var(--ouro-claro);text-shadow:0 0 18px rgba(212,164,55,.55)}
+.hero-rating .estrelas{color:var(--ouro);letter-spacing:3px;font-size:.85rem}
+.hero-actions{display:flex;gap:16px;justify-content:center;margin-top:36px;flex-wrap:wrap;animation:heroIn 1.4s .7s both}
+.btn{
+  font-family:var(--corpo);font-size:.74rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;
+  padding:17px 38px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+  position:relative;overflow:hidden;transition:.35s;
+}
+.btn-gold{background:linear-gradient(135deg,var(--ouro-claro),var(--ouro));color:var(--preto)}
+.btn-gold::before{
+  content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);
+  transform:skewX(-20deg);transition:left .55s;
+}
+.btn-gold:hover::before{left:130%}
+.btn-gold:hover{box-shadow:var(--glow);transform:translateY(-2px)}
+.btn-ghost{border:1px solid rgba(212,164,55,.45);color:var(--ouro-claro);background:rgba(212,164,55,.04)}
+.btn-ghost:hover{border-color:var(--ouro);box-shadow:inset 0 0 24px rgba(212,164,55,.12),var(--glow);text-shadow:0 0 12px rgba(212,164,55,.7)}
+.scroll-hint{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;
+  font-size:.6rem;letter-spacing:.44em;text-transform:uppercase;color:var(--creme2);
+  display:flex;flex-direction:column;align-items:center;gap:10px;text-indent:.44em;
+}
+.scroll-hint::after{content:'';width:1px;height:46px;background:linear-gradient(var(--ouro),transparent);box-shadow:0 0 10px rgba(212,164,55,.6);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ============ MARQUEE ============ */
+.marquee{
+  border-top:1px solid rgba(212,164,55,.22);border-bottom:1px solid rgba(212,164,55,.22);
+  background:var(--preto2);overflow:hidden;padding:17px 0;position:relative;z-index:2;
+}
+.marquee-track{display:flex;gap:60px;width:max-content;animation:rola 26s linear infinite}
+.marquee-track span{
+  font-family:var(--corpo);font-weight:500;font-size:.78rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--ouro);text-shadow:0 0 14px rgba(212,164,55,.45);
+  display:flex;align-items:center;gap:60px;white-space:nowrap;
+}
+.marquee-track span::after{content:'◆';font-size:.55rem;color:var(--ouro-escuro)}
+@keyframes rola{to{transform:translateX(-50%)}}
+
+/* ============ CARDS COM LUZ INTERATIVA ============ */
+.card-luz{
+  position:relative;background:var(--preto2);
+  border:1px solid rgba(212,164,55,.14);
+  overflow:hidden;transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;
+}
+.card-luz::before{ /* luz dourada que segue o mouse dentro do card */
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(212,164,55,.13),transparent 60%);
+}
+.card-luz:hover{transform:translateY(-6px);border-color:rgba(212,164,55,.5);box-shadow:0 20px 50px rgba(0,0,0,.55),0 0 30px rgba(212,164,55,.12)}
+.card-luz:hover::before{opacity:1}
+
+/* ============ CATEGORIAS ============ */
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:60px}
+.cat{padding:50px 36px}
+.cat-icon{width:54px;height:54px;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(212,164,55,.4);border-radius:50%;
+  color:var(--ouro);font-size:1.2rem;margin-bottom:26px;
+  box-shadow:inset 0 0 18px rgba(212,164,55,.12);
+  transition:.4s;
+}
+.cat:hover .cat-icon{box-shadow:inset 0 0 22px rgba(212,164,55,.25),0 0 24px rgba(212,164,55,.4);transform:rotate(8deg)}
+.cat h3{font-family:var(--display);font-weight:400;font-size:1.45rem;margin-bottom:14px}
+.cat p{font-size:.92rem;line-height:1.8;color:var(--creme2)}
+
+/* ============ PRODUTOS ============ */
+.produtos-bg{background:var(--preto2)}
+.prod-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
+.filtros{display:flex;flex-wrap:wrap;gap:10px;margin-top:46px}
+.chip{
+  font-family:var(--corpo);font-size:.66rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;
+  padding:11px 22px;cursor:pointer;white-space:nowrap;
+  color:var(--creme2);background:none;border:1px solid rgba(212,164,55,.3);transition:.3s;
+}
+.chip:hover{color:var(--ouro-claro);border-color:rgba(212,164,55,.6);box-shadow:0 0 14px rgba(212,164,55,.18)}
+.chip.on{
+  color:var(--preto);font-weight:600;border-color:var(--ouro);
+  background:linear-gradient(135deg,var(--ouro-claro),var(--ouro));
+  box-shadow:0 0 20px rgba(212,164,55,.45);
+}
+.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:34px}
+.prod-tag.esgotado{background:#352B17;color:var(--creme2);box-shadow:none}
+.estoque-low{display:block;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#E8A06A;margin-top:9px}
+.prod-add[disabled]{opacity:.4;pointer-events:none}
+.prod-img{
+  aspect-ratio:1/1.05;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 36%,rgba(212,164,55,.16),transparent 70%),var(--preto);
+  position:relative;overflow:hidden;
+}
+.prod-img svg{width:44%;height:auto;transition:transform .5s,filter .5s}
+.card-luz:hover .prod-img svg{transform:scale(1.1);filter:drop-shadow(0 0 16px rgba(212,164,55,.6))}
+.prod-tag{
+  position:absolute;top:14px;left:14px;font-size:.58rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--ouro-claro),var(--ouro));color:var(--preto);padding:5px 12px;
+  box-shadow:0 0 16px rgba(212,164,55,.45);
+}
+.prod-info{padding:22px 22px 26px}
+.prod-cat{font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ouro-escuro);font-weight:500}
+.prod-info h4{font-weight:500;font-size:.98rem;letter-spacing:.03em;margin:10px 0 12px}
+.prod-preco{font-family:var(--display);font-size:1.15rem;color:var(--ouro-claro);text-shadow:0 0 14px rgba(212,164,55,.35)}
+.prod-preco small{font-family:var(--corpo);font-weight:300;font-size:.72rem;color:var(--creme2);margin-left:6px;text-shadow:none}
+
+/* ============ GOOGLE / AVALIAÇÕES REAIS ============ */
+.google-band{
+  display:grid;grid-template-columns:auto 1fr;gap:70px;align-items:center;
+  border:1px solid rgba(212,164,55,.25);padding:54px 60px;margin-top:60px;
+  background:linear-gradient(135deg,rgba(212,164,55,.06),transparent 50%),var(--preto2);
+  position:relative;overflow:hidden;
+}
+.google-band::after{
+  content:'';position:absolute;top:-80px;right:-80px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,164,55,.14),transparent 70%);
+}
+.google-nota{text-align:center}
+.google-nota .num{
+  font-family:var(--display);font-size:5rem;line-height:1;
+  background:linear-gradient(180deg,var(--ouro-vivo),var(--ouro-escuro));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 26px rgba(212,164,55,.4));
+}
+.google-nota .estrelas{color:var(--ouro);font-size:1.2rem;letter-spacing:6px;margin:12px 0 8px;text-shadow:0 0 16px rgba(212,164,55,.6)}
+.google-nota .qtd{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--creme2)}
+.depo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.depo{padding:26px 28px}
+.depo p{font-size:.95rem;line-height:1.7;font-style:italic;color:var(--creme)}
+.depo .fonte{margin-top:14px;font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ouro-escuro);display:flex;align-items:center;gap:8px}
+.depo .fonte::before{content:'';width:18px;height:1px;background:var(--ouro-escuro)}
+
+/* ============ INSTAGRAM ============ */
+.insta{
+  text-align:center;position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse 55% 65% at 50% 50%,rgba(212,164,55,.1),transparent 70%),
+    var(--preto);
+}
+.insta-frame{
+  max-width:680px;margin:0 auto;padding:74px 50px;
+  border:1px solid rgba(212,164,55,.3);position:relative;
+}
+.insta-frame::before,.insta-frame::after{
+  content:'';position:absolute;width:26px;height:26px;border:2px solid var(--ouro);
+  box-shadow:0 0 14px rgba(212,164,55,.5);
+}
+.insta-frame::before{top:-2px;left:-2px;border-right:none;border-bottom:none}
+.insta-frame::after{bottom:-2px;right:-2px;border-left:none;border-top:none}
+.insta-icon{
+  width:74px;height:74px;margin:0 auto 30px;border-radius:22px;
+  border:2px solid var(--ouro);display:flex;align-items:center;justify-content:center;
+  position:relative;box-shadow:inset 0 0 22px rgba(212,164,55,.16),0 0 34px rgba(212,164,55,.3);
+  animation:pulseSelo 3.4s ease-in-out infinite;
+}
+.insta-icon::before{content:'';width:30px;height:30px;border:2.5px solid var(--ouro);border-radius:50%}
+.insta-icon::after{content:'';position:absolute;top:14px;right:14px;width:6px;height:6px;border-radius:50%;background:var(--ouro);box-shadow:0 0 10px var(--ouro)}
+.insta h2{margin-top:0}
+.insta p{max-width:420px;margin:20px auto 0;color:var(--creme2);line-height:1.8;font-size:.98rem}
+.insta .arroba{
+  font-family:var(--display);font-size:1.3rem;color:var(--ouro-claro);
+  text-shadow:0 0 22px rgba(212,164,55,.5);display:block;margin-top:26px;
+}
+.insta .btn{margin-top:32px}
+
+/* ============ CONTATO ============ */
+.contato-bg{background:var(--preto2);border-top:1px solid rgba(212,164,55,.16)}
+.contato-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start}
+.info-list{list-style:none;margin-top:40px;display:flex;flex-direction:column;gap:26px}
+.info-list li{display:flex;gap:20px;align-items:flex-start}
+.info-icon{
+  width:46px;height:46px;flex-shrink:0;border:1px solid rgba(212,164,55,.45);
+  display:flex;align-items:center;justify-content:center;color:var(--ouro);
+  box-shadow:inset 0 0 16px rgba(212,164,55,.1);transition:.35s;
+}
+.info-list li:hover .info-icon{box-shadow:inset 0 0 18px rgba(212,164,55,.22),0 0 20px rgba(212,164,55,.4)}
+.info-list strong{display:block;font-weight:500;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ouro);margin-bottom:6px}
+.info-list p,.info-list a{color:var(--creme2);font-size:.96rem;line-height:1.7;text-decoration:none}
+.info-list a:hover{color:var(--ouro-claro)}
+.horario-card{padding:46px 42px}
+.horario-card h3{font-family:var(--display);font-weight:400;font-size:1.45rem}
+.horario-row{
+  display:flex;justify-content:space-between;padding:15px 0;
+  border-bottom:1px solid rgba(212,164,55,.12);font-size:.93rem;color:var(--creme2);
+}
+.horario-row:last-of-type{border-bottom:none}
+.horario-row span:last-child{color:var(--ouro-claro)}
+.horario-card .btn{width:100%;justify-content:center;margin-top:30px}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid rgba(212,164,55,.2);padding:52px 0 32px;background:var(--preto)}
+.footer-grid{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+.footer-social{display:flex;gap:14px}
+.footer-social a{
+  width:42px;height:42px;border:1px solid rgba(212,164,55,.4);
+  display:flex;align-items:center;justify-content:center;color:var(--ouro);text-decoration:none;
+  transition:.3s;font-size:.8rem;letter-spacing:.05em;
+}
+.footer-social a:hover{background:var(--ouro);color:var(--preto);box-shadow:var(--glow)}
+.footer-bottom{
+  margin-top:36px;padding-top:22px;border-top:1px solid rgba(212,164,55,.1);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  font-size:.7rem;letter-spacing:.16em;color:var(--creme2);
+}
+
+/* ============ WHATSAPP FLUTUANTE ============ */
+.whats-float{
+  position:fixed;bottom:26px;right:26px;z-index:90;width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,var(--ouro-claro),var(--ouro));color:var(--preto);
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  box-shadow:0 0 30px rgba(212,164,55,.55);transition:transform .3s,box-shadow .3s;
+  animation:pulseSelo 3.4s ease-in-out infinite;
+}
+.whats-float:hover{transform:scale(1.12);box-shadow:0 0 50px rgba(212,164,55,.8)}
+
+/* ============ CARRINHO — BOTÃO NAV ============ */
+.nav-actions{display:flex;align-items:center;gap:14px}
+.nav-cart{
+  position:relative;width:44px;height:44px;cursor:pointer;
+  background:rgba(212,164,55,.05);border:1px solid rgba(212,164,55,.45);color:var(--ouro);
+  display:flex;align-items:center;justify-content:center;transition:.3s;
+}
+.nav-cart:hover{box-shadow:inset 0 0 18px rgba(212,164,55,.15),var(--glow);color:var(--ouro-claro)}
+.cart-badge{
+  position:absolute;top:-7px;right:-7px;min-width:19px;height:19px;padding:0 5px;
+  background:linear-gradient(135deg,var(--ouro-claro),var(--ouro));color:var(--preto);
+  font-size:.62rem;font-weight:600;border-radius:100px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 14px rgba(212,164,55,.6);
+  transform:scale(0);transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.cart-badge.on{transform:scale(1)}
+.cart-badge.pop{animation:badgePop .45s cubic-bezier(.34,1.56,.64,1)}
+@keyframes badgePop{0%{transform:scale(1)}40%{transform:scale(1.55)}100%{transform:scale(1)}}
+
+/* botão "adicionar" nos cards */
+.prod-add{
+  width:100%;margin-top:16px;padding:13px;cursor:pointer;
+  font-family:var(--corpo);font-size:.68rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--ouro-claro);background:rgba(212,164,55,.06);border:1px solid rgba(212,164,55,.4);
+  position:relative;overflow:hidden;transition:.3s;
+}
+.prod-add::before{
+  content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(240,206,107,.35),transparent);
+  transform:skewX(-20deg);transition:left .5s;
+}
+.prod-add:hover{background:rgba(212,164,55,.14);box-shadow:0 0 22px rgba(212,164,55,.25);border-color:var(--ouro)}
+.prod-add:hover::before{left:130%}
+.prod-add.ok{background:linear-gradient(135deg,var(--ouro-claro),var(--ouro));color:var(--preto);border-color:var(--ouro)}
+
+/* ============ OVERLAYS ============ */
+.overlay{
+  position:fixed;inset:0;z-index:115;background:rgba(4,3,1,.7);backdrop-filter:blur(5px);
+  opacity:0;pointer-events:none;transition:opacity .4s;
+}
+.overlay.on{opacity:1;pointer-events:auto}
+body.lock{overflow:hidden}
+
+/* ============ DRAWER DO CARRINHO ============ */
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:120;
+  width:min(430px,100%);
+  background:linear-gradient(180deg,var(--preto2),var(--preto));
+  border-left:1px solid rgba(212,164,55,.3);
+  box-shadow:-30px 0 80px rgba(0,0,0,.7);
+  transform:translateX(105%);transition:transform .5s cubic-bezier(.22,1,.36,1);
+  display:flex;flex-direction:column;
+}
+.drawer.open{transform:none}
+.drawer::before{ /* fio de luz na borda */
+  content:'';position:absolute;left:0;top:0;bottom:0;width:1px;
+  background:linear-gradient(180deg,transparent,var(--ouro),transparent);
+  box-shadow:0 0 18px rgba(212,164,55,.6);
+}
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:26px 28px;border-bottom:1px solid rgba(212,164,55,.16);
+}
+.drawer-head h3{font-family:var(--display);font-weight:400;font-size:1.35rem}
+.drawer-head h3 span{color:var(--ouro-claro);text-shadow:0 0 16px rgba(212,164,55,.5)}
+.btn-x{
+  width:38px;height:38px;cursor:pointer;background:none;color:var(--creme2);
+  border:1px solid rgba(212,164,55,.3);font-size:1rem;transition:.3s;
+}
+.btn-x:hover{color:var(--ouro);border-color:var(--ouro);box-shadow:0 0 16px rgba(212,164,55,.35)}
+.drawer-body{flex:1;overflow-y:auto;padding:10px 28px}
+.drawer-body::-webkit-scrollbar{width:5px}
+.drawer-body::-webkit-scrollbar-thumb{background:rgba(212,164,55,.35)}
+.cart-vazio{
+  height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;text-align:center;color:var(--creme2);
+}
+.cart-vazio svg{opacity:.55;filter:drop-shadow(0 0 14px rgba(212,164,55,.35))}
+.cart-vazio p{font-size:.85rem;letter-spacing:.18em;text-transform:uppercase}
+.cart-item{
+  display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;
+  padding:18px 0;border-bottom:1px solid rgba(212,164,55,.12);
+  animation:itemIn .4s cubic-bezier(.22,1,.36,1);
+}
+@keyframes itemIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.cart-thumb{
+  width:64px;height:64px;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 40%,rgba(212,164,55,.18),transparent 75%),var(--carvao);
+  border:1px solid rgba(212,164,55,.2);
+}
+.cart-thumb svg{width:60%;height:60%}
+.cart-item h5{font-weight:500;font-size:.88rem;letter-spacing:.03em;margin-bottom:4px}
+.cart-item .ci-preco{font-family:var(--display);font-size:.95rem;color:var(--ouro-claro)}
+.qty{display:flex;align-items:center;gap:2px;margin-top:10px}
+.qty button{
+  width:26px;height:26px;cursor:pointer;background:none;
+  border:1px solid rgba(212,164,55,.4);color:var(--ouro);font-size:.85rem;transition:.25s;
+}
+.qty button:hover{background:rgba(212,164,55,.15);box-shadow:0 0 12px rgba(212,164,55,.35)}
+.qty span{min-width:32px;text-align:center;font-size:.85rem;color:var(--creme)}
+.ci-remove{
+  background:none;border:none;color:var(--creme2);cursor:pointer;font-size:.95rem;
+  padding:6px;transition:.25s;align-self:start;
+}
+.ci-remove:hover{color:var(--ouro-claro);text-shadow:0 0 12px rgba(212,164,55,.7)}
+.drawer-foot{padding:24px 28px 28px;border-top:1px solid rgba(212,164,55,.2);background:rgba(212,164,55,.03)}
+.subtotal-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.subtotal-row .lbl{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--creme2)}
+.subtotal-row .val{font-family:var(--display);font-size:1.55rem;color:var(--ouro-claro);text-shadow:0 0 20px rgba(212,164,55,.45)}
+.drawer-foot .nota{font-size:.7rem;color:var(--creme2);letter-spacing:.06em;margin-bottom:16px}
+.drawer-foot .btn{width:100%;justify-content:center}
+.btn[disabled]{opacity:.35;pointer-events:none}
+
+/* ============ CHECKOUT ============ */
+.checkout{
+  position:fixed;z-index:130;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:24px;pointer-events:none;
+}
+.ck-card{
+  width:min(580px,100%);max-height:92vh;display:flex;flex-direction:column;
+  background:linear-gradient(180deg,var(--preto2),var(--preto));
+  border:1px solid rgba(212,164,55,.35);
+  box-shadow:0 0 0 1px rgba(212,164,55,.08),0 40px 100px rgba(0,0,0,.8),0 0 60px rgba(212,164,55,.12);
+  opacity:0;transform:translateY(36px) scale(.97);transition:.45s cubic-bezier(.22,1,.36,1);
+  pointer-events:none;position:relative;overflow:hidden;
+}
+.checkout.open .ck-card{opacity:1;transform:none;pointer-events:auto}
+.ck-card::before{ /* fio de luz superior */
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--ouro),transparent);
+  box-shadow:0 0 16px rgba(212,164,55,.7);
+}
+.ck-head{display:flex;align-items:center;justify-content:space-between;padding:24px 30px 0}
+.ck-head h3{font-family:var(--display);font-weight:400;font-size:1.4rem}
+.ck-progress{display:flex;gap:8px;padding:22px 30px 0}
+.ck-progress .p{
+  flex:1;display:flex;flex-direction:column;gap:8px;
+  font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--creme2);
+  transition:.3s;
+}
+.ck-progress .p::before{content:'';height:2px;background:rgba(212,164,55,.18);transition:.4s}
+.ck-progress .p.on{color:var(--ouro-claro)}
+.ck-progress .p.on::before{background:linear-gradient(90deg,var(--ouro-claro),var(--ouro));box-shadow:0 0 12px rgba(212,164,55,.7)}
+.ck-body{padding:26px 30px;overflow-y:auto;flex:1}
+.ck-body::-webkit-scrollbar{width:5px}
+.ck-body::-webkit-scrollbar-thumb{background:rgba(212,164,55,.35)}
+.ck-step{display:none;animation:stepIn .4s cubic-bezier(.22,1,.36,1)}
+.ck-step.on{display:block}
+@keyframes stepIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+.ck-step h4{font-family:var(--display);font-weight:400;font-size:1.15rem;margin-bottom:6px}
+.ck-step .dica{font-size:.82rem;color:var(--creme2);margin-bottom:24px;line-height:1.6}
+.campo{margin-bottom:18px}
+.campo label{
+  display:block;font-size:.62rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ouro);margin-bottom:9px;
+}
+.campo input,.campo textarea{
+  width:100%;padding:15px 16px;font-family:var(--corpo);font-size:1rem;font-weight:300;
+  background:rgba(212,164,55,.04);border:1px solid rgba(212,164,55,.28);color:var(--creme);
+  outline:none;transition:.3s;resize:vertical;
+}
+.campo input:focus,.campo textarea:focus{
+  border-color:var(--ouro);box-shadow:0 0 0 1px var(--ouro),0 0 24px rgba(212,164,55,.25);
+  background:rgba(212,164,55,.07);
+}
+.campo input::placeholder,.campo textarea::placeholder{color:rgba(185,172,140,.5)}
+.campo .erro{display:none;font-size:.72rem;color:#E8A06A;margin-top:7px;letter-spacing:.05em}
+.campo.invalido input,.campo.invalido textarea{border-color:#C77B45;box-shadow:0 0 16px rgba(199,123,69,.25)}
+.campo.invalido .erro{display:block}
+.opcoes{display:grid;gap:12px}
+.opcao{
+  display:flex;gap:16px;align-items:flex-start;padding:18px 20px;cursor:pointer;
+  border:1px solid rgba(212,164,55,.22);background:rgba(212,164,55,.03);transition:.3s;position:relative;
+}
+.opcao:hover{border-color:rgba(212,164,55,.5)}
+.opcao input{position:absolute;opacity:0;pointer-events:none}
+.opcao .radio{
+  width:18px;height:18px;flex-shrink:0;margin-top:2px;border-radius:50%;
+  border:1px solid rgba(212,164,55,.55);position:relative;transition:.3s;
+}
+.opcao .radio::after{
+  content:'';position:absolute;inset:4px;border-radius:50%;
+  background:var(--ouro-claro);transform:scale(0);transition:.25s cubic-bezier(.34,1.56,.64,1);
+}
+.opcao.sel{border-color:var(--ouro);background:rgba(212,164,55,.09);box-shadow:0 0 24px rgba(212,164,55,.18),inset 0 0 22px rgba(212,164,55,.06)}
+.opcao.sel .radio{box-shadow:0 0 12px rgba(212,164,55,.7)}
+.opcao.sel .radio::after{transform:scale(1)}
+.opcao strong{display:block;font-weight:500;font-size:.92rem;letter-spacing:.04em;margin-bottom:3px}
+.opcao small{font-size:.78rem;color:var(--creme2);line-height:1.5}
+.opcao .icone{font-size:1.1rem;color:var(--ouro);margin-top:1px}
+#painelEndereco{display:none;margin-top:18px}
+#painelEndereco.on{display:block;animation:stepIn .35s}
+.end-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.end-grid .full{grid-column:1/-1}
+.cep-wrap{position:relative}
+.cep-wrap input{padding-right:46px}
+.cep-spin{
+  position:absolute;right:15px;top:50%;width:16px;height:16px;margin-top:-8px;
+  border-radius:50%;border:2px solid rgba(212,164,55,.22);border-top-color:var(--ouro-claro);
+  opacity:0;transition:opacity .25s;animation:girar .8s linear infinite;
+  box-shadow:0 0 10px rgba(212,164,55,.3);
+}
+.cep-spin.on{opacity:1}
+.cep-hint{display:block;margin-top:7px;font-size:.72rem;letter-spacing:.05em;color:var(--ouro-claro)}
+.cep-hint:empty{display:none}
+.cep-hint.alerta{color:#E8A06A}
+/* revisão */
+.rev-bloco{border:1px solid rgba(212,164,55,.18);padding:18px 20px;margin-bottom:14px;background:rgba(212,164,55,.03)}
+.rev-bloco h6{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ouro);margin-bottom:12px;font-weight:500}
+.rev-item{display:flex;justify-content:space-between;font-size:.86rem;color:var(--creme);padding:5px 0}
+.rev-item span:last-child{color:var(--ouro-claro);font-family:var(--display);font-size:.9rem}
+.rev-info{font-size:.86rem;color:var(--creme2);line-height:1.8}
+.rev-total{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:18px 20px;border:1px solid rgba(212,164,55,.45);
+  background:rgba(212,164,55,.07);box-shadow:inset 0 0 26px rgba(212,164,55,.08);
+}
+.rev-total .lbl{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--creme2)}
+.rev-total .val{font-family:var(--display);font-size:1.6rem;color:var(--ouro-claro);text-shadow:0 0 22px rgba(212,164,55,.5)}
+/* sucesso */
+.ck-sucesso{text-align:center;padding:30px 0 16px}
+.check-anel{
+  width:96px;height:96px;margin:0 auto 28px;border-radius:50%;
+  border:2px solid var(--ouro);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 40px rgba(212,164,55,.5),inset 0 0 26px rgba(212,164,55,.18);
+  animation:pulseSelo 2.6s ease-in-out infinite;
+}
+.check-anel svg path{
+  stroke:var(--ouro-claro);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:60;stroke-dashoffset:60;animation:desenha 0.8s .25s forwards;
+  filter:drop-shadow(0 0 8px rgba(212,164,55,.8));
+}
+.ck-sucesso h4{font-size:1.5rem!important;margin-bottom:12px!important}
+.ck-sucesso p{font-size:.9rem;color:var(--creme2);line-height:1.8;max-width:380px;margin:0 auto}
+.ck-foot{
+  display:flex;gap:12px;justify-content:space-between;
+  padding:20px 30px 26px;border-top:1px solid rgba(212,164,55,.16);
+}
+.ck-foot .btn{flex:1;justify-content:center;padding:15px 20px}
+.btn-volta{border:1px solid rgba(212,164,55,.35);color:var(--creme2);background:none;cursor:pointer;
+  font-family:var(--corpo);font-size:.72rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;transition:.3s}
+.btn-volta:hover{color:var(--ouro);border-color:var(--ouro)}
+.btn-gold{border:none;cursor:pointer}
+
+/* ============ PAGAMENTO COM CARTÃO (NO SITE) ============ */
+.tagmini{
+  font-size:.52rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--ouro-claro),var(--ouro));color:var(--preto);
+  padding:3px 9px;border-radius:100px;margin-left:10px;vertical-align:2px;
+  box-shadow:0 0 12px rgba(212,164,55,.5);
+}
+#painelCartao{display:none;margin-top:22px}
+#painelCartao.on{display:block;animation:stepIn .4s}
+.cc-scene{perspective:1100px;max-width:360px;margin:0 auto 26px}
+.cc{
+  position:relative;width:100%;aspect-ratio:1.586;
+  transform-style:preserve-3d;transition:transform .65s cubic-bezier(.22,1,.36,1);
+}
+.cc.flip{transform:rotateY(180deg)}
+.cc-face{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border:1px solid rgba(212,164,55,.5);
+  background:
+    radial-gradient(circle at 85% -10%,rgba(212,164,55,.22),transparent 55%),
+    linear-gradient(135deg,#1C1509,#0B0907 60%);
+  box-shadow:0 24px 60px rgba(0,0,0,.65),0 0 34px rgba(212,164,55,.16),inset 0 0 30px rgba(212,164,55,.05);
+  padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;
+  overflow:hidden;
+}
+.cc-face::before{ /* espiral marca d'água */
+  content:'';position:absolute;right:-34px;bottom:-44px;width:150px;height:150px;border-radius:50%;
+  border:1px solid rgba(212,164,55,.16);
+  box-shadow:0 0 0 18px rgba(212,164,55,.05),0 0 0 38px rgba(212,164,55,.03);
+}
+.cc-back{transform:rotateY(180deg);padding:0}
+.cc-top{display:flex;justify-content:space-between;align-items:center}
+.cc-chip{
+  width:42px;height:30px;border-radius:6px;
+  background:linear-gradient(135deg,var(--ouro-claro),var(--ouro) 55%,var(--ouro-escuro));
+  box-shadow:0 0 14px rgba(212,164,55,.45);position:relative;
+}
+.cc-chip::after{content:'';position:absolute;inset:7px 6px;border:1px solid rgba(7,5,3,.45);border-radius:3px}
+.cc-brand{
+  font-family:var(--corpo);font-weight:600;font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--ouro-claro);text-shadow:0 0 14px rgba(212,164,55,.6);
+}
+.cc-num{
+  font-family:var(--corpo);font-weight:400;font-size:clamp(1.05rem,4.6vw,1.3rem);
+  letter-spacing:.14em;color:var(--creme);text-shadow:0 0 16px rgba(212,164,55,.25);
+}
+.cc-bottom{display:flex;justify-content:space-between;gap:18px}
+.cc-bottom small{display:block;font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--creme2);margin-bottom:5px}
+.cc-bottom b{font-weight:500;font-size:.82rem;letter-spacing:.1em;color:var(--creme);text-transform:uppercase}
+.cc-tarja{height:44px;background:#040302;margin-top:26px;border-top:1px solid rgba(212,164,55,.2);border-bottom:1px solid rgba(212,164,55,.2)}
+.cc-cvvrow{
+  margin:26px 24px 0;display:flex;align-items:center;justify-content:flex-end;gap:14px;
+  background:rgba(243,234,216,.1);padding:10px 16px;
+}
+.cc-cvvrow small{font-size:.54rem;letter-spacing:.3em;text-transform:uppercase;color:var(--creme2)}
+.cc-cvvrow span{font-size:.95rem;letter-spacing:.3em;color:var(--creme)}
+.cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.cc-grid .full{grid-column:1/-1}
+.cc-demo{
+  margin-top:6px;font-size:.7rem;line-height:1.6;color:var(--creme2);letter-spacing:.04em;
+  border-left:2px solid rgba(212,164,55,.5);padding-left:12px;
+}
+select.sel-parcelas{
+  width:100%;padding:15px 16px;font-family:var(--corpo);font-size:1rem;font-weight:300;
+  background:rgba(212,164,55,.04);border:1px solid rgba(212,164,55,.28);color:var(--creme);
+  outline:none;transition:.3s;appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D4A437' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;
+}
+select.sel-parcelas:focus{border-color:var(--ouro);box-shadow:0 0 0 1px var(--ouro),0 0 24px rgba(212,164,55,.25)}
+select.sel-parcelas option{background:var(--preto2);color:var(--creme)}
+/* processamento */
+.processing{
+  position:absolute;inset:0;z-index:5;display:none;
+  flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  background:rgba(7,5,3,.93);backdrop-filter:blur(8px);text-align:center;
+}
+.processing.on{display:flex}
+.proc-ring{
+  width:58px;height:58px;border-radius:50%;
+  border:2px solid rgba(212,164,55,.18);border-top-color:var(--ouro-claro);
+  box-shadow:0 0 26px rgba(212,164,55,.35);
+  animation:girar .85s linear infinite;
+}
+@keyframes girar{to{transform:rotate(360deg)}}
+.processing p{font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ouro-claro);text-shadow:0 0 16px rgba(212,164,55,.5)}
+.suc-extra{
+  margin-top:18px!important;display:inline-block;
+  font-size:.8rem!important;color:var(--ouro-claro)!important;
+  border:1px solid rgba(212,164,55,.4);padding:10px 18px;
+  box-shadow:0 0 20px rgba(212,164,55,.18);
+}
+.suc-extra:empty{display:none}
+
+/* ============ BANNER RETORNO MERCADO PAGO ============ */
+.mp-banner{
+  position:fixed;top:86px;left:50%;transform:translateX(-50%);z-index:135;
+  display:none;align-items:center;gap:18px;flex-wrap:wrap;
+  max-width:min(660px,92vw);padding:18px 22px;
+  background:rgba(14,11,7,.96);backdrop-filter:blur(10px);
+  border:1px solid rgba(212,164,55,.55);
+  box-shadow:0 0 34px rgba(212,164,55,.25),0 20px 50px rgba(0,0,0,.65);
+  font-size:.86rem;line-height:1.6;color:var(--creme2);
+}
+.mp-banner.on{display:flex;animation:toastIn .5s cubic-bezier(.22,1,.36,1)}
+.mp-banner strong{color:var(--ouro-claro);text-shadow:0 0 14px rgba(212,164,55,.5)}
+.mp-banner #mpBannerTxt{flex:1;min-width:200px}
+.mp-banner .btn{padding:11px 18px;font-size:.6rem}
+.mp-banner .btn-x{width:30px;height:30px;font-size:.75rem;flex-shrink:0}
+
+/* ============ TOAST ============ */
+.toast-zone{position:fixed;bottom:28px;left:28px;z-index:140;display:flex;flex-direction:column;gap:10px}
+.toast{
+  display:flex;align-items:center;gap:12px;padding:14px 20px;
+  background:rgba(14,11,7,.95);border:1px solid rgba(212,164,55,.5);
+  box-shadow:0 0 26px rgba(212,164,55,.25),0 14px 36px rgba(0,0,0,.6);
+  font-size:.8rem;letter-spacing:.08em;color:var(--creme);
+  animation:toastIn .4s cubic-bezier(.22,1,.36,1);
+}
+.toast.sai{animation:toastOut .35s forwards}
+.toast .dot{width:7px;height:7px;border-radius:50%;background:var(--ouro-claro);box-shadow:0 0 10px var(--ouro)}
+@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(14px)}}
+
+/* ============ RESPONSIVO ============ */
+@media(max-width:980px){
+  .cat{padding:44px 28px}
+  .prod-grid{grid-template-columns:repeat(2,1fr)}
+  .google-band{grid-template-columns:1fr;gap:44px;padding:46px 34px}
+  .depo-grid{grid-template-columns:1fr}
+  .contato-grid{grid-template-columns:1fr;gap:54px}
+}
+@media(max-width:640px){
+  .nav-links,.nav-insta{display:none}
+  .nav-actions{gap:10px}
+  .toast-zone{left:14px;right:84px}
+  .checkout{padding:0}
+  .ck-card{width:100%;height:100%;max-height:100%}
+  .ck-progress .p{font-size:.5rem}
+  .end-grid{grid-template-columns:1fr}
+  .container{padding:0 20px}
+  .hero{padding:108px 0 84px}
+  .marca-spiral{width:82px;height:82px}
+  .hero-rating{flex-wrap:wrap;justify-content:center;row-gap:6px;padding:11px 18px;font-size:.74rem}
+  .hero-rating .nota{font-size:1.05rem}
+  .hero-actions{flex-direction:column;align-items:stretch;gap:12px}
+  .hero-actions .btn{justify-content:center;text-align:center}
+  .scroll-hint{display:none}
+  .filtros{flex-wrap:nowrap;overflow-x:auto;margin-left:-20px;margin-right:-20px;padding:0 20px 8px;scrollbar-width:none}
+  .filtros::-webkit-scrollbar{display:none}
+  .prod-grid{grid-template-columns:repeat(2,1fr);gap:13px}
+  .prod-info{padding:14px 13px 16px}
+  .prod-info h4{font-size:.82rem;margin:8px 0 10px;min-height:2.5em}
+  .prod-cat{font-size:.54rem}
+  .prod-preco{font-size:.98rem}
+  .prod-add{padding:11px 6px;font-size:.56rem;letter-spacing:.16em;margin-top:12px}
+  .prod-tag{font-size:.5rem;padding:4px 8px;top:10px;left:10px}
+  .cats{grid-template-columns:1fr}
+  .google-band{padding:36px 22px;gap:34px}
+  .google-nota .num{font-size:3.6rem}
+  .horario-card{padding:34px 24px}
+  .marquee-track span{font-size:.68rem;letter-spacing:.3em}
+  .drawer-foot{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+  .ck-foot{padding-bottom:calc(22px + env(safe-area-inset-bottom))}
+  .whats-float{width:52px;height:52px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom))}
+  .menu-btn{display:flex}
+  .nav-mobile{
+    position:fixed;inset:0;background:rgba(7,5,3,.97);backdrop-filter:blur(20px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;
+    z-index:99;opacity:0;pointer-events:none;transition:opacity .4s;
+  }
+  .nav-mobile.open{opacity:1;pointer-events:auto}
+  .nav-mobile a{font-family:var(--display);font-size:1.35rem;color:var(--creme);text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
+  .nav-mobile a:hover{color:var(--ouro)}
+  .section{padding:76px 0}
+  .insta-frame{padding:54px 26px}
+}
+</style>
+</head>
+<body>
+
+<div id="cursorLight"></div>
+
+<!-- gradiente compartilhado (invisível) -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:fixed;left:-9999px;top:-9999px;width:0;height:0;overflow:hidden">
+  <defs>
+    <linearGradient id="gradOuro" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0CE6B"/>
+      <stop offset=".55" stop-color="#D4A437"/>
+      <stop offset="1" stop-color="#8C6B1E"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="#" class="logo-nav">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M50 50 m0 -3 a3 3 0 1 1 -0.1 0 M50 50 m0 -11 a11 11 0 1 1 -11 11 a19 19 0 1 0 19 -19 a27 27 0 1 1 -27 27 a35 35 0 1 0 35 -35 a43 43 0 1 1 -43 43" stroke="url(#gradOuro)" stroke-width="6" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-nav-text">Bazar<br>Ohkubo<small>Palmas — TO</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#colecoes">Coleções</a></li>
+      <li><a href="#destaques">Destaques</a></li>
+      <li><a href="#avaliacoes">Avaliações</a></li>
+      <li><a href="#contato">Visite-nos</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://www.instagram.com/bazarohkubo" target="_blank" rel="noopener" class="nav-insta">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.8" cy="6.2" r="1.3" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+      <button class="nav-cart" id="cartBtn" aria-label="Abrir carrinho">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="#colecoes">Coleções</a>
+  <a href="#destaques">Destaques</a>
+  <a href="#avaliacoes">Avaliações</a>
+  <a href="#contato">Visite-nos</a>
+  <a href="https://www.instagram.com/bazarohkubo" target="_blank" rel="noopener" style="color:var(--ouro)">Instagram</a>
+</div>
+
+<!-- HERO — LOCKUP FIEL AO LOGO -->
+<header class="hero">
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="hero-logo container">
+    <div class="marca">
+      <div class="marca-spiral" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path class="traco" d="M50 50 m0 -3 a3 3 0 1 1 -0.1 0 M50 50 m0 -11 a11 11 0 1 1 -11 11 a19 19 0 1 0 19 -19 a27 27 0 1 1 -27 27 a35 35 0 1 0 35 -35 a43 43 0 1 1 -43 43"/>
+        </svg>
+      </div>
+      <h1>Bazar<br>Ohkubo</h1>
+      <div class="sub">Cosméticos e Bijouterias</div>
+      <div class="selo">Palmas-TO</div>
+    </div>
+    <div class="hero-rating">
+      <span class="nota">4.4</span>
+      <span class="estrelas">★★★★☆</span>
+      <span>910 avaliações no Google</span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://www.instagram.com/bazarohkubo" target="_blank" rel="noopener" class="btn btn-gold">Seguir no Instagram</a>
+      <a href="#destaques" class="btn btn-ghost">Explorar a loja</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Descubra</div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>Maquiagem</span><span>Bijouterias</span><span>Skincare</span><span>Perfumaria</span><span>Cabelos</span><span>Acessórios</span>
+  </div>
+</div>
+
+<!-- CATEGORIAS -->
+<section class="section" id="colecoes">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">Nossas coleções</span>
+      <h2>Um bazar completo<br>no coração da <em>104 Sul</em>.</h2>
+    </div>
+    <div class="cats">
+      <article class="cat card-luz reveal">
+        <div class="cat-icon">✦</div>
+        <h3>Cosméticos &amp; Maquiagem</h3>
+        <p>Bases, batons, sombras e skincare de marcas confiáveis — novidades chegando toda semana para a sua rotina de beleza.</p>
+      </article>
+      <article class="cat card-luz reveal">
+        <div class="cat-icon">◈</div>
+        <h3>Bijouterias</h3>
+        <p>Brincos, colares, anéis e pulseiras com acabamento dourado. Elegância acessível para o dia a dia e ocasiões especiais.</p>
+      </article>
+      <article class="cat card-luz reveal">
+        <div class="cat-icon">❋</div>
+        <h3>Cabelos &amp; Cuidados</h3>
+        <p>Linha completa de produtos para cabelos e cuidados pessoais, com atendimento de quem entende do assunto.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section class="section produtos-bg" id="destaques">
+  <div class="container">
+    <div class="prod-head reveal">
+      <div>
+        <span class="eyebrow">Em destaque</span>
+        <h2>Queridinhos<br>da <em>semana</em>.</h2>
+      </div>
+      <a href="https://wa.me/556332151718" class="btn btn-ghost">Pedir pelo WhatsApp</a>
+    </div>
+    <div class="filtros reveal" id="filtros" aria-label="Filtrar por categoria"></div>
+    <div class="prod-grid" id="prodGrid"></div>
+  </div>
+</section>
+
+<!-- AVALIAÇÕES REAIS DO GOOGLE -->
+<section class="section" id="avaliacoes">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">Reputação comprovada</span>
+      <h2>Quem conhece,<br><em>recomenda</em>.</h2>
+    </div>
+    <div class="google-band reveal">
+      <div class="google-nota">
+        <div class="num">4.4</div>
+        <div class="estrelas">★★★★☆</div>
+        <div class="qtd">910 avaliações<br>no Google</div>
+      </div>
+      <div class="depo-grid">
+        <div class="depo card-luz">
+          <p>"Bom lugar, bons preços."</p>
+          <span class="fonte">Avaliação no Google</span>
+        </div>
+        <div class="depo card-luz">
+          <p>"Otimooooo!"</p>
+          <span class="fonte">Avaliação no Google</span>
+        </div>
+        <div class="depo card-luz">
+          <p>"Top."</p>
+          <span class="fonte">Avaliação no Google</span>
+        </div>
+        <div class="depo card-luz">
+          <p>"Show."</p>
+          <span class="fonte">Avaliação no Google</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="section insta">
+  <div class="container">
+    <div class="insta-frame reveal">
+      <div class="insta-icon" aria-hidden="true"></div>
+      <span class="eyebrow" style="justify-content:center">Siga a loja</span>
+      <h2>Novidades primeiro<br>no <em>Instagram</em>.</h2>
+      <p>Lançamentos, promoções e os achados da semana — tudo passa primeiro pelo nosso perfil. Vem fazer parte.</p>
+      <span class="arroba">@bazarohkubo</span>
+      <a href="https://www.instagram.com/bazarohkubo" target="_blank" rel="noopener" class="btn btn-gold">Seguir agora</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="section contato-bg" id="contato">
+  <div class="container contato-grid">
+    <div class="reveal">
+      <span class="eyebrow">Visite-nos</span>
+      <h2>Estamos na<br><em>104 Sul</em>, Palmas.</h2>
+      <ul class="info-list">
+        <li>
+          <div class="info-icon">⌖</div>
+          <div>
+            <strong>Endereço</strong>
+            <p>Q. 104 Sul, Av. NS 4, nº 41 — Sala 05<br>Plano Diretor Sul, Palmas - TO, 77020-032</p>
+          </div>
+        </li>
+        <li>
+          <div class="info-icon">✆</div>
+          <div>
+            <strong>Telefone</strong>
+            <p><a href="tel:+556332151718">(63) 3215-1718</a></p>
+          </div>
+        </li>
+        <li>
+          <div class="info-icon">◈</div>
+          <div>
+            <strong>Instagram</strong>
+            <p><a href="https://www.instagram.com/bazarohkubo" target="_blank" rel="noopener">@bazarohkubo</a></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="horario-card card-luz reveal">
+      <h3>Horário de funcionamento</h3>
+      <div style="margin-top:26px">
+        <div class="horario-row"><span>Segunda a sexta</span><span>08h — 18h30</span></div>
+        <div class="horario-row"><span>Sábado</span><span>08h — 14h</span></div>
+        <div class="horario-row"><span>Domingo</span><span>Fechado</span></div>
+      </div>
+      <a href="https://wa.me/556332151718" class="btn btn-gold">Falar com a loja</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <a href="#" class="logo-nav">
+        <svg viewBox="0 0 100 100" fill="none" style="width:30px;height:30px">
+          <path d="M50 50 m0 -3 a3 3 0 1 1 -0.1 0 M50 50 m0 -11 a11 11 0 1 1 -11 11 a19 19 0 1 0 19 -19 a27 27 0 1 1 -27 27 a35 35 0 1 0 35 -35 a43 43 0 1 1 -43 43" stroke="url(#gradOuro)" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-nav-text">Bazar Ohkubo<small>Cosméticos e Bijouterias</small></span>
+      </a>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/bazarohkubo" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+        <a href="https://wa.me/556332151718" aria-label="WhatsApp">WA</a>
+        <a href="tel:+556332151718" aria-label="Telefone">✆</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Bazar Ohkubo — Q. 104 Sul, Palmas, TO</span>
+      <span>★ 4.4 no Google · 910 avaliações</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== OVERLAY + DRAWER DO CARRINHO ===== -->
+<div class="overlay" id="overlay"></div>
+
+<!-- banner de retorno do Mercado Pago -->
+<div class="mp-banner" id="mpBanner" role="status">
+  <span id="mpBannerTxt"></span>
+  <button class="btn btn-gold" id="mpBannerBtn" style="display:none">Enviar no WhatsApp</button>
+  <button class="btn-x" id="mpBannerX" aria-label="Fechar aviso">✕</button>
+</div>
+
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Carrinho de compras">
+  <div class="drawer-head">
+    <h3>Seu carrinho <span id="drawerQtd"></span></h3>
+    <button class="btn-x" id="drawerClose" aria-label="Fechar carrinho">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot">
+    <div class="subtotal-row">
+      <span class="lbl">Subtotal</span>
+      <span class="val" id="drawerSubtotal">R$ 0,00</span>
+    </div>
+    <p class="nota">Entrega ou retirada combinadas na finalização.</p>
+    <button class="btn btn-gold" id="btnCheckout" disabled>Finalizar pedido</button>
+  </div>
+</aside>
+
+<!-- ===== CHECKOUT ===== -->
+<div class="checkout" id="checkout" role="dialog" aria-modal="true" aria-label="Finalizar pedido">
+  <div class="ck-card">
+    <div class="ck-head">
+      <h3>Finalizar <em style="font-style:normal;color:var(--ouro-claro)">pedido</em></h3>
+      <button class="btn-x" id="ckClose" aria-label="Fechar checkout">✕</button>
+    </div>
+    <div class="ck-progress" id="ckProgress">
+      <div class="p" data-p="1">Dados</div>
+      <div class="p" data-p="2">Entrega</div>
+      <div class="p" data-p="3">Pagamento</div>
+      <div class="p" data-p="4">Revisão</div>
+    </div>
+    <div class="ck-body">
+
+      <!-- PASSO 1: DADOS -->
+      <div class="ck-step" data-step="1">
+        <h4>Quem está comprando?</h4>
+        <p class="dica">Usamos seus dados apenas para identificar o pedido no WhatsApp da loja.</p>
+        <div class="campo" id="cNome">
+          <label for="inNome">Nome completo</label>
+          <input type="text" id="inNome" placeholder="Ex.: Maria Oliveira" autocomplete="name">
+          <span class="erro">Informe seu nome.</span>
+        </div>
+        <div class="campo" id="cFone">
+          <label for="inFone">WhatsApp / Telefone</label>
+          <input type="tel" id="inFone" placeholder="(63) 9 0000-0000" autocomplete="tel" inputmode="tel">
+          <span class="erro">Informe um telefone válido com DDD.</span>
+        </div>
+      </div>
+
+      <!-- PASSO 2: ENTREGA -->
+      <div class="ck-step" data-step="2">
+        <h4>Como você quer receber?</h4>
+        <p class="dica">Estamos na Q. 104 Sul, Av. NS 4, nº 41 — Sala 05, Plano Diretor Sul.</p>
+        <div class="opcoes" id="opEntrega">
+          <label class="opcao sel" data-val="retirada">
+            <input type="radio" name="entrega" value="retirada" checked>
+            <span class="radio"></span>
+            <span><strong>Retirar na loja</strong><small>Seg–Sex 8h–18h30 · Sáb 8h–14h. Sem custo.</small></span>
+          </label>
+          <label class="opcao" data-val="entrega">
+            <input type="radio" name="entrega" value="entrega">
+            <span class="radio"></span>
+            <span><strong>Entrega em Palmas</strong><small>Taxa combinada pelo WhatsApp conforme a região.</small></span>
+          </label>
+        </div>
+        <div id="painelEndereco">
+          <div class="end-grid">
+            <div class="campo" id="cCep">
+              <label for="inCep">CEP</label>
+              <div class="cep-wrap">
+                <input type="text" id="inCep" placeholder="77000-000" inputmode="numeric" maxlength="9" autocomplete="postal-code">
+                <span class="cep-spin" id="cepSpin" aria-hidden="true"></span>
+              </div>
+              <span class="erro">Informe um CEP válido (8 dígitos).</span>
+              <span class="cep-hint" id="cepHint"></span>
+            </div>
+            <div class="campo" id="cNum">
+              <label for="inNum">Número / Lote</label>
+              <input type="text" id="inNum" placeholder="Ex.: 41" autocomplete="address-line2">
+              <span class="erro">Informe o número.</span>
+            </div>
+            <div class="campo full" id="cRua">
+              <label for="inRua">Endereço (rua, avenida ou alameda)</label>
+              <input type="text" id="inRua" placeholder="Preenchido pelo CEP" autocomplete="address-line1">
+              <span class="erro">Informe o endereço.</span>
+            </div>
+            <div class="campo" id="cBairro">
+              <label for="inBairro">Bairro / Quadra</label>
+              <input type="text" id="inBairro" placeholder="Preenchido pelo CEP">
+              <span class="erro">Informe o bairro.</span>
+            </div>
+            <div class="campo" id="cCidade">
+              <label for="inCidade">Cidade / UF</label>
+              <input type="text" id="inCidade" placeholder="Palmas - TO" autocomplete="address-level2">
+              <span class="erro">Informe a cidade.</span>
+            </div>
+            <div class="campo full" id="cCompl">
+              <label for="inCompl">Complemento <span style="color:var(--creme2);letter-spacing:.1em">(opcional)</span></label>
+              <input type="text" id="inCompl" placeholder="Apto, bloco, casa…">
+            </div>
+            <div class="campo full" id="cRef">
+              <label for="inRef">Ponto de referência <span style="color:var(--creme2);letter-spacing:.1em">(opcional)</span></label>
+              <input type="text" id="inRef" placeholder="Ex.: próximo ao supermercado X">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASSO 3: PAGAMENTO -->
+      <div class="ck-step" data-step="3">
+        <h4>Forma de pagamento</h4>
+        <p class="dica">O pagamento é confirmado com a loja — nenhum valor é cobrado pelo site.</p>
+        <div class="opcoes" id="opPagamento">
+          <label class="opcao sel" data-val="Pix">
+            <input type="radio" name="pag" value="Pix" checked>
+            <span class="radio"></span>
+            <span class="icone">◆</span>
+            <span><strong>Pix</strong><small>Chave enviada pelo WhatsApp na confirmação.</small></span>
+          </label>
+          <label class="opcao" data-val="Online">
+            <input type="radio" name="pag" value="Online">
+            <span class="radio"></span>
+            <span class="icone">▭</span>
+            <span><strong>Pagar online — Mercado Pago<span class="tagmini">Seguro</span></strong><small>Cartão de crédito em até 6x, Pix e saldo — no ambiente do Mercado Pago.</small></span>
+          </label>
+          <label class="opcao" data-val="CartaoLoja">
+            <input type="radio" name="pag" value="CartaoLoja">
+            <span class="radio"></span>
+            <span class="icone">⌗</span>
+            <span><strong>Cartão na maquininha</strong><small>Crédito ou débito, na loja (retirada) ou na entrega.</small></span>
+          </label>
+          <label class="opcao" data-val="Dinheiro">
+            <input type="radio" name="pag" value="Dinheiro">
+            <span class="radio"></span>
+            <span class="icone">◎</span>
+            <span><strong>Dinheiro</strong><small>Informe se precisa de troco na observação do WhatsApp.</small></span>
+          </label>
+        </div>
+
+        <!-- painel do cartão online -->
+        <div id="painelCartao">
+          <div class="cc-scene">
+            <div class="cc" id="cc">
+              <div class="cc-face cc-front">
+                <div class="cc-top"><span class="cc-chip"></span><span class="cc-brand" id="ccBrand">Cartão</span></div>
+                <div class="cc-num" id="ccNum">•••• •••• •••• ••••</div>
+                <div class="cc-bottom">
+                  <span><small>Titular</small><b id="ccNome">Seu nome</b></span>
+                  <span><small>Validade</small><b id="ccVal">MM/AA</b></span>
+                </div>
+              </div>
+              <div class="cc-face cc-back">
+                <div class="cc-tarja"></div>
+                <div class="cc-cvvrow"><small>CVV</small><span id="ccCvv">•••</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="cc-grid">
+            <div class="campo full" id="cNumero">
+              <label for="inNumero">Número do cartão</label>
+              <input type="text" id="inNumero" placeholder="0000 0000 0000 0000" inputmode="numeric" autocomplete="cc-number" maxlength="23">
+              <span class="erro">Número de cartão inválido.</span>
+            </div>
+            <div class="campo full" id="cNomeCard">
+              <label for="inNomeCard">Nome impresso no cartão</label>
+              <input type="text" id="inNomeCard" placeholder="Como está no cartão" autocomplete="cc-name">
+              <span class="erro">Informe o nome do titular.</span>
+            </div>
+            <div class="campo" id="cValidade">
+              <label for="inValidade">Validade</label>
+              <input type="text" id="inValidade" placeholder="MM/AA" inputmode="numeric" autocomplete="cc-exp" maxlength="5">
+              <span class="erro">Validade inválida.</span>
+            </div>
+            <div class="campo" id="cCvv">
+              <label for="inCvv">CVV</label>
+              <input type="text" id="inCvv" placeholder="•••" inputmode="numeric" autocomplete="cc-csc" maxlength="4">
+              <span class="erro">CVV inválido.</span>
+            </div>
+            <div class="campo full" id="cParcelas">
+              <label for="selParcelas">Parcelamento</label>
+              <select class="sel-parcelas" id="selParcelas"></select>
+            </div>
+          </div>
+          <p class="cc-demo">Modo demonstração (Mercado Pago ainda não ativado): nada é cobrado e os dados do cartão não saem desta página. Para ativar o pagamento real, siga o guia MERCADOPAGO.md e preencha <b>MP.backend</b> no código.</p>
+        </div>
+      </div>
+
+      <!-- PASSO 4: REVISÃO -->
+      <div class="ck-step" data-step="4">
+        <h4>Confira seu pedido</h4>
+        <p class="dica">Tudo certo? Ao confirmar, o pedido abre pronto no WhatsApp da loja — é só enviar.</p>
+        <div class="rev-bloco">
+          <h6>Itens</h6>
+          <div id="revItens"></div>
+        </div>
+        <div class="rev-bloco">
+          <h6>Cliente &amp; entrega</h6>
+          <div class="rev-info" id="revInfo"></div>
+        </div>
+        <div class="rev-total">
+          <span class="lbl" id="revTotalLbl">Total dos itens</span>
+          <span class="val" id="revTotal">R$ 0,00</span>
+        </div>
+      </div>
+
+      <!-- PASSO 5: SUCESSO -->
+      <div class="ck-step" data-step="5">
+        <div class="ck-sucesso">
+          <div class="check-anel">
+            <svg width="44" height="44" viewBox="0 0 44 44"><path d="M10 23 l9 9 l16 -19"/></svg>
+          </div>
+          <h4>Pedido enviado!</h4>
+          <p>Abrimos o WhatsApp da loja com o seu pedido completo. Se a aba não abriu, verifique o bloqueador de pop-ups e tente novamente. A equipe do Bazar Ohkubo confirma os detalhes com você por lá. ✨</p>
+          <p class="suc-extra" id="sucExtra"></p>
+        </div>
+      </div>
+
+    </div>
+    <div class="ck-foot" id="ckFoot">
+      <button class="btn-volta" id="btnVoltar">Voltar</button>
+      <button class="btn btn-gold" id="btnAvancar">Continuar</button>
+    </div>
+    <div class="processing" id="processing">
+      <div class="proc-ring"></div>
+      <p>Processando pagamento…</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast-zone" id="toastZone" aria-live="polite"></div>
+
+<a href="https://wa.me/556332151718" class="whats-float" aria-label="Falar no WhatsApp">
+  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.5-.6c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
+</a>
+
+<script>
+/* ===== luz dourada que segue o cursor ===== */
+const luz=document.getElementById('cursorLight');
+let lx=innerWidth/2, ly=innerHeight/2, tx=lx, ty=ly;
+addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY},{passive:true});
+(function animaLuz(){
+  lx+=(tx-lx)*.08; ly+=(ty-ly)*.08;
+  luz.style.left=lx+'px'; luz.style.top=ly+'px';
+  requestAnimationFrame(animaLuz);
+})();
+
+/* ===== luz interativa dentro dos cards ===== */
+document.querySelectorAll('.card-luz').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    card.style.setProperty('--my',(e.clientY-r.top)+'px');
+  },{passive:true});
+});
+
+/* ===== partículas douradas no hero ===== */
+const cv=document.getElementById('particles');
+if(cv && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const ctx=cv.getContext('2d');
+  let W,H,ps=[];
+  function resize(){
+    W=cv.width=cv.offsetWidth; H=cv.height=cv.offsetHeight;
+    ps=Array.from({length:Math.min(70,W/16)},()=>({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*1.6+.4,
+      vx:(Math.random()-.5)*.18, vy:-(Math.random()*.3+.08),
+      a:Math.random()*.6+.15, fase:Math.random()*Math.PI*2
+    }));
+  }
+  resize(); addEventListener('resize',resize,{passive:true});
+  (function tick(t){
+    ctx.clearRect(0,0,W,H);
+    for(const p of ps){
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.y<-10){p.y=H+10;p.x=Math.random()*W}
+      if(p.x<-10)p.x=W+10; if(p.x>W+10)p.x=-10;
+      const tw=p.a*(0.55+0.45*Math.sin(t/700+p.fase));
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(212,164,55,${tw})`;
+      ctx.shadowColor='rgba(212,164,55,.8)';
+      ctx.shadowBlur=8;
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  })(0);
+}
+
+/* ===== nav / menu / marquee / reveal ===== */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+const menuBtn=document.getElementById('menuBtn');
+const navMobile=document.getElementById('navMobile');
+menuBtn.addEventListener('click',()=>navMobile.classList.toggle('open'));
+navMobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navMobile.classList.remove('open')));
+
+const track=document.getElementById('marqueeTrack');
+track.innerHTML+=track.innerHTML;
+
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ==================================================
+   CATÁLOGO
+   PRODUTOS abaixo é o catálogo de RESERVA (fallback).
+   Com o painel/banco ativos, a lista oficial vem de /api/produtos.
+================================================== */
+const API={produtos:'/api/produtos',pedidos:'/api/pedidos'};
+let PRODUTOS=[
+  {id:'serum',nome:'Sérum Facial Iluminador',cat:'Skincare',preco:49.90,estoque:14,tag:'Novo',
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="36" y="8" width="28" height="18" rx="3" fill="#8C6B1E"/><rect x="30" y="26" width="40" height="100" rx="8" fill="url(#gradOuro)"/><rect x="38" y="48" width="24" height="42" rx="3" fill="#070503" opacity=".35"/></svg>'},
+  {id:'argola',nome:'Brinco Argola Dourada',cat:'Bijouterias',preco:24.90,estoque:20,sufixo:'o par',
+   svg:'<svg viewBox="0 0 100 140" fill="none"><circle cx="50" cy="55" r="30" stroke="url(#gradOuro)" stroke-width="5"/><circle cx="50" cy="98" r="9" fill="#F0CE6B"/><path d="M50 25 v-12" stroke="#D4A437" stroke-width="4" stroke-linecap="round"/></svg>'},
+  {id:'perfume',nome:'Eau de Parfum Âmbar 50ml',cat:'Perfumaria',preco:89.90,estoque:9,tag:'Mais vendido',
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="40" y="10" width="20" height="14" rx="2" fill="#8C6B1E"/><path d="M32 32 h36 l6 24 v60 a8 8 0 0 1 -8 8 h-32 a8 8 0 0 1 -8 -8 v-60 z" fill="url(#gradOuro)"/><circle cx="50" cy="78" r="14" fill="#070503" opacity=".3"/></svg>'},
+  {id:'paleta',nome:'Paleta de Sombras Sunset',cat:'Maquiagem',preco:54.90,estoque:7,tag:'Novo',
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="14" y="36" width="72" height="68" rx="8" stroke="url(#gradOuro)" stroke-width="4"/><circle cx="34" cy="58" r="8" fill="#F0CE6B"/><circle cx="58" cy="58" r="8" fill="#D4A437"/><circle cx="34" cy="82" r="8" fill="#8C6B1E"/><circle cx="58" cy="82" r="8" fill="#F0CE6B" opacity=".6"/></svg>'},
+  {id:'batom',nome:'Batom Matte Ruby',cat:'Maquiagem',preco:19.90,estoque:25,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="38" y="64" width="24" height="58" rx="4" fill="url(#gradOuro)"/><rect x="42" y="50" width="16" height="16" fill="#8C6B1E"/><path d="M42 50 v-22 a8 8 0 0 1 16 0 l0 22 z" fill="#F0CE6B"/></svg>'},
+  {id:'colar',nome:'Colar Pingente Coração',cat:'Bijouterias',preco:34.90,estoque:11,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><path d="M50 18 c-26 14 -30 44 0 58 c30 -14 26 -44 0 -58z" stroke="url(#gradOuro)" stroke-width="5" fill="none"/><path d="M50 76 v34" stroke="#D4A437" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="118" r="6" fill="#F0CE6B"/></svg>'},
+  {id:'base',nome:'Base Líquida HD',cat:'Maquiagem',preco:39.90,estoque:10,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="44" y="10" width="24" height="8" rx="3" fill="#8C6B1E"/><rect x="44" y="18" width="12" height="18" fill="#8C6B1E"/><rect x="36" y="36" width="28" height="88" rx="7" fill="url(#gradOuro)"/></svg>'},
+  {id:'protetor',nome:'Protetor Solar Facial FPS50',cat:'Skincare',preco:44.90,estoque:16,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="40" y="12" width="20" height="14" rx="3" fill="#8C6B1E"/><rect x="32" y="26" width="36" height="98" rx="7" fill="url(#gradOuro)"/><circle cx="50" cy="58" r="9" fill="#070503" opacity=".3"/><path d="M50 44v-5M50 72v5M63 58h5M37 58h-5" stroke="#070503" opacity=".3" stroke-width="3" stroke-linecap="round"/></svg>'},
+  {id:'conjunto',nome:'Conjunto Colar e Brincos',cat:'Bijouterias',preco:49.90,estoque:6,tag:'Kit',
+   svg:'<svg viewBox="0 0 100 140" fill="none"><path d="M22 34q28 34 56 0" stroke="url(#gradOuro)" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="50" cy="56" r="7" fill="#F0CE6B"/><path d="M34 84v5M66 84v5" stroke="#D4A437" stroke-width="3" stroke-linecap="round"/><circle cx="34" cy="99" r="9" stroke="#D4A437" stroke-width="4"/><circle cx="66" cy="99" r="9" stroke="#D4A437" stroke-width="4"/></svg>'},
+  {id:'gloss',nome:'Gloss Labial Mel',cat:'Maquiagem',preco:16.90,estoque:18,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><path d="M50 10v10" stroke="#D4A437" stroke-width="4" stroke-linecap="round"/><rect x="45" y="20" width="10" height="20" rx="4" fill="#8C6B1E"/><rect x="41" y="40" width="18" height="84" rx="7" fill="url(#gradOuro)"/></svg>'},
+  {id:'rimel',nome:'Máscara de Cílios Volume',cat:'Maquiagem',preco:27.90,estoque:3,tag:'Mais vendido',
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="44" y="10" width="12" height="36" rx="4" fill="#8C6B1E"/><path d="M46 18h8M46 26h8M46 34h8" stroke="#F0CE6B" stroke-width="2"/><path d="M50 46v10" stroke="#D4A437" stroke-width="3"/><rect x="40" y="56" width="20" height="68" rx="6" fill="url(#gradOuro)"/></svg>'},
+  {id:'blush',nome:'Blush Compacto Rosé',cat:'Maquiagem',preco:24.90,estoque:12,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><circle cx="50" cy="64" r="34" stroke="url(#gradOuro)" stroke-width="5"/><circle cx="50" cy="64" r="19" fill="#F0CE6B" opacity=".9"/><rect x="36" y="100" width="28" height="7" rx="3.5" fill="#8C6B1E"/></svg>'},
+  {id:'pulseira',nome:'Pulseira Elos Dourados',cat:'Bijouterias',preco:29.90,estoque:15,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><circle cx="50" cy="70" r="34" stroke="url(#gradOuro)" stroke-width="5" stroke-dasharray="14 9" stroke-linecap="round"/><circle cx="50" cy="36" r="6" fill="#F0CE6B"/></svg>'},
+  {id:'micelar',nome:'Água Micelar 400ml',cat:'Skincare',preco:29.90,estoque:8,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="42" y="10" width="16" height="16" rx="3" fill="#8C6B1E"/><rect x="32" y="26" width="36" height="100" rx="8" fill="url(#gradOuro)"/><rect x="38" y="56" width="24" height="36" rx="3" fill="#070503" opacity=".3"/></svg>'},
+  {id:'anel',nome:'Anel Ajustável Cristal',cat:'Bijouterias',preco:17.90,estoque:22,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><path d="M50 28l13 15-13 15-13-15z" fill="#F0CE6B"/><circle cx="50" cy="86" r="26" stroke="url(#gradOuro)" stroke-width="6"/></svg>'},
+  {id:'bodysplash',nome:'Body Splash Vanilla',cat:'Perfumaria',preco:36.90,estoque:13,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="40" y="26" width="20" height="16" rx="3" fill="#8C6B1E"/><path d="M64 26l9-6M66 34l11-2M60 20l5-9" stroke="#D4A437" stroke-width="3" stroke-linecap="round"/><rect x="34" y="42" width="32" height="82" rx="9" fill="url(#gradOuro)"/></svg>'},
+  {id:'vitc',nome:'Hidratante Facial Vitamina C',cat:'Skincare',preco:38.90,estoque:2,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="44" y="6" width="12" height="22" rx="3" fill="#8C6B1E"/><path d="M44 28h12l8 16v66a8 8 0 0 1-8 8H44a8 8 0 0 1-8-8V44z" fill="url(#gradOuro)"/><circle cx="50" cy="82" r="9" fill="#070503" opacity=".3"/></svg>'},
+  {id:'perola',nome:'Brinco Pérola Clássico',cat:'Bijouterias',preco:21.90,estoque:17,sufixo:'o par',
+   svg:'<svg viewBox="0 0 100 140" fill="none"><path d="M50 16c11 3 11 16 0 18" stroke="#D4A437" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="50" cy="82" r="27" fill="url(#gradOuro)"/><circle cx="41" cy="73" r="6" fill="#F5EDDB" opacity=".75"/></svg>'},
+  {id:'mascara',nome:'Máscara Capilar Nutrição',cat:'Cabelos',preco:32.90,estoque:9,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="26" y="44" width="48" height="50" rx="10" fill="url(#gradOuro)"/><rect x="24" y="30" width="52" height="14" rx="4" fill="#8C6B1E"/><ellipse cx="50" cy="70" rx="14" ry="10" fill="#070503" opacity=".25"/></svg>'},
+  {id:'oleo',nome:'Óleo Reparador de Pontas',cat:'Cabelos',preco:26.90,estoque:14,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="40" y="6" width="20" height="8" rx="3" fill="#8C6B1E"/><rect x="46" y="14" width="8" height="18" fill="#8C6B1E"/><path d="M50 32c-15 9-21 20-21 36a21 21 0 0 0 42 0c0-16-6-27-21-36z" fill="url(#gradOuro)"/></svg>'},
+  {id:'leavein',nome:'Leave-in Protetor Térmico',cat:'Cabelos',preco:28.90,estoque:5,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><path d="M42 40V28h11l9 7v5z" fill="#8C6B1E"/><path d="M65 30l9-4M64 21l7-8" stroke="#D4A437" stroke-width="3" stroke-linecap="round"/><rect x="38" y="40" width="24" height="84" rx="7" fill="url(#gradOuro)"/></svg>'},
+  {id:'pinceis',nome:'Kit 5 Pincéis de Maquiagem',cat:'Acessórios',preco:39.90,estoque:4,
+   svg:'<svg viewBox="0 0 100 140" fill="none" stroke-linecap="round"><path d="M36 124V74" stroke="url(#gradOuro)" stroke-width="10"/><rect x="30" y="58" width="12" height="16" fill="#8C6B1E"/><path d="M30 58l6-24 6 24z" fill="#F0CE6B"/><path d="M64 124V82" stroke="url(#gradOuro)" stroke-width="10"/><rect x="58" y="66" width="12" height="16" fill="#8C6B1E"/><path d="M58 66l6-20 6 20z" fill="#F0CE6B"/></svg>'},
+  {id:'necessaire',nome:'Nécessaire Glam',cat:'Acessórios',preco:34.90,estoque:10,
+   svg:'<svg viewBox="0 0 100 140" fill="none"><rect x="18" y="46" width="64" height="58" rx="13" stroke="url(#gradOuro)" stroke-width="5"/><path d="M18 64h64" stroke="#D4A437" stroke-width="4"/><circle cx="68" cy="64" r="4" fill="#F0CE6B"/><path d="M68 68v7" stroke="#F0CE6B" stroke-width="3" stroke-linecap="round"/></svg>'}
+];
+const fmt=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+const grid=document.getElementById('prodGrid');
+const filtrosEl=document.getElementById('filtros');
+let filtroAtual='Todos';
+
+function montaChips(){
+  const cats=['Todos',...new Set(PRODUTOS.map(p=>p.cat))];
+  if(!cats.includes(filtroAtual))filtroAtual='Todos';
+  filtrosEl.innerHTML=cats.map(c=>`<button class="chip${c===filtroAtual?' on':''}" data-cat="${c}">${c}</button>`).join('');
+}
+function bindLuz(escopo){
+  escopo.querySelectorAll('.card-luz').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+      card.style.setProperty('--my',(e.clientY-r.top)+'px');
+    },{passive:true});
+  });
+}
+let primeiraLeva=true;
+function renderProdutos(){
+  const lista=filtroAtual==='Todos'?PRODUTOS:PRODUTOS.filter(p=>p.cat===filtroAtual);
+  grid.innerHTML=lista.map(p=>{
+    const esgotado=p.estoque===0;
+    const baixo=!esgotado&&typeof p.estoque==='number'&&p.estoque<=3;
+    return `
+  <article class="card-luz reveal${primeiraLeva?'':' in'}" data-id="${p.id}">
+    <div class="prod-img">
+      ${esgotado?'<span class="prod-tag esgotado">Esgotado</span>':(p.tag?`<span class="prod-tag">${p.tag}</span>`:'')}
+      ${p.svg}
+    </div>
+    <div class="prod-info">
+      <span class="prod-cat">${p.cat}</span>
+      <h4>${p.nome}</h4>
+      <span class="prod-preco">${fmt(p.preco)}${p.sufixo?`<small>${p.sufixo}</small>`:''}</span>
+      ${baixo?`<span class="estoque-low">Últimas ${p.estoque} unid.</span>`:''}
+      <button class="prod-add" data-add="${p.id}"${esgotado?' disabled':''}>${esgotado?'Esgotado':'Adicionar ao carrinho'}</button>
+    </div>
+  </article>`}).join('');
+  if(primeiraLeva){grid.querySelectorAll('.reveal').forEach(el=>io.observe(el));primeiraLeva=false}
+  bindLuz(grid);
+}
+montaChips();
+renderProdutos();
+filtrosEl.addEventListener('click',e=>{
+  const chip=e.target.closest('.chip'); if(!chip)return;
+  filtroAtual=chip.dataset.cat;
+  filtrosEl.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c===chip));
+  renderProdutos();
+});
+
+/* catálogo oficial do banco (painel administrativo) */
+(async()=>{
+  try{
+    const r=await fetch(API.produtos);
+    if(!r.ok)throw 0;
+    const lista=await r.json();
+    if(Array.isArray(lista)&&lista.length){
+      PRODUTOS=lista;
+      montaChips();
+      renderProdutos();
+    }
+  }catch(e){/* sem backend: usa o catálogo de reserva acima */}
+})();
+
+/* ==================================================
+   CARRINHO (estado em memória)
+================================================== */
+let carrinho=[];
+const badge=document.getElementById('cartBadge');
+const drawer=document.getElementById('drawer');
+const overlay=document.getElementById('overlay');
+const drawerBody=document.getElementById('drawerBody');
+const drawerSubtotal=document.getElementById('drawerSubtotal');
+const drawerQtd=document.getElementById('drawerQtd');
+const btnCheckout=document.getElementById('btnCheckout');
+
+const totalItens=()=>carrinho.reduce((s,i)=>s+i.qty,0);
+const subtotal=()=>carrinho.reduce((s,i)=>s+i.preco*i.qty,0);
+
+function add(id){
+  const p=PRODUTOS.find(x=>x.id===id); if(!p)return;
+  const max=(typeof p.estoque==='number')?p.estoque:99;
+  if(max<=0){toast('Produto esgotado no momento');return}
+  const item=carrinho.find(x=>x.id===id);
+  if((item?item.qty:0)>=max){toast('Quantidade máxima em estoque atingida');return}
+  item?item.qty++:carrinho.push({...p,qty:1});
+  sync(); toast(`${p.nome} adicionado ao carrinho`);
+  badge.classList.remove('pop'); void badge.offsetWidth; badge.classList.add('pop');
+}
+function mudaQty(id,d){
+  const item=carrinho.find(x=>x.id===id); if(!item)return;
+  if(d>0){
+    const p=PRODUTOS.find(x=>x.id===id);
+    const max=(p&&typeof p.estoque==='number')?p.estoque:99;
+    if(item.qty>=max){toast('Quantidade máxima em estoque');return}
+  }
+  item.qty+=d;
+  if(item.qty<=0)carrinho=carrinho.filter(x=>x.id!==id);
+  sync();
+}
+function remove(id){carrinho=carrinho.filter(x=>x.id!==id);sync()}
+
+function sync(){
+  const n=totalItens();
+  badge.textContent=n; badge.classList.toggle('on',n>0);
+  drawerQtd.textContent=n?`(${n})`:'';
+  drawerSubtotal.textContent=fmt(subtotal());
+  btnCheckout.disabled=n===0;
+  if(!n){
+    drawerBody.innerHTML=`<div class="cart-vazio">
+      <svg width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#D4A437" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <p>Seu carrinho está vazio</p>
+      <span style="font-size:.78rem;color:var(--creme2)">Os achados dourados esperam por você ✦</span>
+    </div>`;
+    return;
+  }
+  drawerBody.innerHTML=carrinho.map(i=>`
+    <div class="cart-item">
+      <div class="cart-thumb">${i.svg}</div>
+      <div>
+        <h5>${i.nome}</h5>
+        <span class="ci-preco">${fmt(i.preco*i.qty)}</span>
+        <div class="qty">
+          <button data-q="-1" data-id="${i.id}" aria-label="Diminuir">−</button>
+          <span>${i.qty}</span>
+          <button data-q="1" data-id="${i.id}" aria-label="Aumentar">+</button>
+        </div>
+      </div>
+      <button class="ci-remove" data-rm="${i.id}" aria-label="Remover ${i.nome}">✕</button>
+    </div>`).join('');
+}
+sync();
+
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-add]'); if(a){
+    add(a.dataset.add);
+    a.classList.add('ok'); a.textContent='Adicionado ✓';
+    setTimeout(()=>{a.classList.remove('ok');a.textContent='Adicionar ao carrinho'},1100);
+  }
+  const q=e.target.closest('[data-q]'); if(q)mudaQty(q.dataset.id,+q.dataset.q);
+  const r=e.target.closest('[data-rm]'); if(r)remove(r.dataset.rm);
+});
+
+/* drawer abre/fecha */
+const lock=v=>document.body.classList.toggle('lock',v);
+function abreDrawer(){drawer.classList.add('open');overlay.classList.add('on');lock(true)}
+function fechaDrawer(){drawer.classList.remove('open');if(!checkout.classList.contains('open')){overlay.classList.remove('on');lock(false)}}
+document.getElementById('cartBtn').addEventListener('click',abreDrawer);
+document.getElementById('drawerClose').addEventListener('click',fechaDrawer);
+overlay.addEventListener('click',()=>{fechaDrawer();fechaCheckout()});
+addEventListener('keydown',e=>{if(e.key==='Escape'){fechaDrawer();fechaCheckout()}});
+
+/* toast */
+function toast(msg){
+  const z=document.getElementById('toastZone');
+  const t=document.createElement('div');
+  t.className='toast'; t.innerHTML=`<span class="dot"></span>${msg}`;
+  z.appendChild(t);
+  setTimeout(()=>{t.classList.add('sai');setTimeout(()=>t.remove(),350)},2600);
+}
+
+/* ==================================================
+   MERCADO PAGO — CONFIGURAÇÃO
+   Após o deploy, preencha backend com a URL da função
+   serverless (ex.: 'https://seusite.vercel.app/api/criar-preferencia').
+   Vazio = modo demonstração (sem cobrança real).
+================================================== */
+const MP={ backend:'' };
+
+/* ==================================================
+   CHECKOUT — WIZARD
+================================================== */
+const checkout=document.getElementById('checkout');
+const steps=[...checkout.querySelectorAll('.ck-step')];
+const prog=[...checkout.querySelectorAll('.ck-progress .p')];
+const btnAvancar=document.getElementById('btnAvancar');
+const btnVoltar=document.getElementById('btnVoltar');
+const ckFoot=document.getElementById('ckFoot');
+let passo=1;
+const dados={nome:'',fone:'',entrega:'retirada',endereco:'',pag:'Pix'};
+
+function mostraPasso(n){
+  passo=n;
+  steps.forEach(s=>s.classList.toggle('on',+s.dataset.step===n));
+  prog.forEach(p=>p.classList.toggle('on',+p.dataset.p<=n));
+  btnVoltar.style.visibility=n===1?'hidden':'visible';
+  btnAvancar.textContent=n!==4?'Continuar':(dados.pag==='Online'&&MP.backend?'Pagar com Mercado Pago':'Enviar pelo WhatsApp');
+  ckFoot.style.display=n===5?'none':'flex';
+  if(n===4)montaRevisao();
+}
+function abreCheckout(){
+  fechaDrawer();
+  checkout.classList.add('open');overlay.classList.add('on');lock(true);
+  mostraPasso(1);
+  setTimeout(()=>document.getElementById('inNome').focus(),420);
+}
+function fechaCheckout(){
+  checkout.classList.remove('open');
+  if(!drawer.classList.contains('open')){overlay.classList.remove('on');lock(false)}
+}
+btnCheckout.addEventListener('click',abreCheckout);
+document.getElementById('ckClose').addEventListener('click',fechaCheckout);
+
+/* opções (entrega / pagamento) */
+function ligaOpcoes(idGrupo,cb){
+  const g=document.getElementById(idGrupo);
+  g.querySelectorAll('.opcao').forEach(op=>{
+    op.addEventListener('click',()=>{
+      g.querySelectorAll('.opcao').forEach(o=>o.classList.remove('sel'));
+      op.classList.add('sel');
+      op.querySelector('input').checked=true;
+      cb(op.dataset.val);
+    });
+  });
+}
+ligaOpcoes('opEntrega',v=>{
+  dados.entrega=v;
+  document.getElementById('painelEndereco').classList.toggle('on',v==='entrega');
+  if(v==='entrega')setTimeout(()=>inCep.focus(),120);
+});
+
+/* ===== endereço por CEP (ViaCEP) ===== */
+const inCep=document.getElementById('inCep');
+const inRua=document.getElementById('inRua');
+const inNum=document.getElementById('inNum');
+const inCompl=document.getElementById('inCompl');
+const inBairro=document.getElementById('inBairro');
+const inCidade=document.getElementById('inCidade');
+const inRef=document.getElementById('inRef');
+const cepHint=document.getElementById('cepHint');
+const cepSpin=document.getElementById('cepSpin');
+let cepCtl=null;
+
+async function buscaCep(cep){
+  if(cepCtl)cepCtl.abort();
+  cepCtl=new AbortController();
+  const tempo=setTimeout(()=>cepCtl.abort(),6000);
+  cepSpin.classList.add('on');
+  cepHint.textContent=''; cepHint.classList.remove('alerta');
+  try{
+    const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`,{signal:cepCtl.signal});
+    const d=await r.json();
+    if(d.erro)throw 'nao-encontrado';
+    if(d.logradouro)inRua.value=d.logradouro;
+    if(d.bairro)inBairro.value=d.bairro;
+    inCidade.value=`${d.localidade} - ${d.uf}`;
+    document.getElementById('cCep').classList.remove('invalido');
+    if(d.localidade==='Palmas'&&d.uf==='TO'){
+      cepHint.textContent='✓ Endereço localizado em Palmas-TO';
+    }else{
+      cepHint.textContent=`CEP de ${d.localidade}-${d.uf} — confirme com a loja se a sua região é atendida.`;
+      cepHint.classList.add('alerta');
+    }
+    (d.logradouro?inNum:inRua).focus();
+  }catch(e){
+    cepHint.textContent=e==='nao-encontrado'
+      ?'CEP não encontrado — confira o número ou preencha o endereço manualmente.'
+      :'Não foi possível consultar o CEP agora — preencha o endereço manualmente.';
+    cepHint.classList.add('alerta');
+  }finally{
+    clearTimeout(tempo);
+    cepSpin.classList.remove('on');
+  }
+}
+inCep.addEventListener('input',()=>{
+  const d=inCep.value.replace(/\D/g,'').slice(0,8);
+  inCep.value=d.length>5?d.slice(0,5)+'-'+d.slice(5):d;
+  if(d.length===8)buscaCep(d);
+});
+ligaOpcoes('opPagamento',v=>{
+  dados.pag=v;
+  const demoCard=v==='Online'&&!MP.backend;
+  document.getElementById('painelCartao').classList.toggle('on',demoCard);
+  if(demoCard)montaParcelas();
+});
+
+/* ===== cartão online: máscaras, validação e preview 3D ===== */
+const cc=document.getElementById('cc');
+const inNumero=document.getElementById('inNumero');
+const inNomeCard=document.getElementById('inNomeCard');
+const inValidade=document.getElementById('inValidade');
+const inCvv=document.getElementById('inCvv');
+const selParcelas=document.getElementById('selParcelas');
+
+function luhn(n){
+  let s=0,d=false;
+  for(let i=n.length-1;i>=0;i--){let x=+n[i];if(d){x*=2;if(x>9)x-=9}s+=x;d=!d}
+  return n.length>=13&&s%10===0;
+}
+const ELO=['401178','401179','431274','438935','451416','457393','457631','457632','504175','506699','5067','509','627780','636297','636368','6516','6550','650'];
+function bandeira(n){
+  if(!n)return'';
+  if(ELO.some(p=>n.startsWith(p)))return'Elo';
+  if(/^3[47]/.test(n))return'Amex';
+  if(/^(606282|3841)/.test(n))return'Hipercard';
+  if(/^(5[1-5]|2[2-7])/.test(n))return'Mastercard';
+  if(/^4/.test(n))return'Visa';
+  return'';
+}
+inNumero.addEventListener('input',()=>{
+  let d=inNumero.value.replace(/\D/g,'').slice(0,19);
+  inNumero.value=d.replace(/(\d{4})(?=\d)/g,'$1 ');
+  const pad=(d+'•'.repeat(16)).slice(0,Math.max(16,d.length));
+  document.getElementById('ccNum').textContent=pad.replace(/(.{4})(?=.)/g,'$1 ');
+  document.getElementById('ccBrand').textContent=bandeira(d)||'Cartão';
+});
+inNomeCard.addEventListener('input',()=>{
+  document.getElementById('ccNome').textContent=inNomeCard.value.trim()||'Seu nome';
+});
+inValidade.addEventListener('input',()=>{
+  let d=inValidade.value.replace(/\D/g,'').slice(0,4);
+  if(d.length>=3)d=d.slice(0,2)+'/'+d.slice(2);
+  inValidade.value=d;
+  document.getElementById('ccVal').textContent=d||'MM/AA';
+});
+inCvv.addEventListener('input',()=>{
+  inCvv.value=inCvv.value.replace(/\D/g,'').slice(0,4);
+  document.getElementById('ccCvv').textContent='•'.repeat(inCvv.value.length)||'•••';
+});
+inCvv.addEventListener('focus',()=>cc.classList.add('flip'));
+inCvv.addEventListener('blur',()=>cc.classList.remove('flip'));
+
+function montaParcelas(){
+  const sub=subtotal();
+  selParcelas.innerHTML=Array.from({length:6},(_,k)=>{
+    const n=k+1;
+    return `<option value="${n}">${n}x de ${fmt(sub/n)}${n===1?' à vista':''}</option>`;
+  }).join('');
+}
+function validadeOk(v){
+  const m=v.match(/^(\d{2})\/(\d{2})$/); if(!m)return false;
+  const mes=+m[1],ano=+m[2];
+  if(mes<1||mes>12)return false;
+  const hoje=new Date(),aa=hoje.getFullYear()%100,mm=hoje.getMonth()+1;
+  return ano>aa||(ano===aa&&mes>=mm);
+}
+
+function pagLabel(){
+  if(dados.pag==='Pix')return'Pix';
+  if(dados.pag==='Dinheiro')return'Dinheiro';
+  if(dados.pag==='CartaoLoja')return'Cartão na maquininha (retirada ou entrega)';
+  if(MP.backend)return'Pagamento online — Mercado Pago (cartão, Pix ou saldo)';
+  const c=dados.cartao;
+  return `Cartão pelo site — ${c.band} •••• ${c.last4} · ${c.n}x de ${fmt(subtotal()/c.n)}`;
+}
+function pagWhats(){
+  if(dados.pag!=='Online')return pagLabel();
+  if(MP.backend)return'Pago online via Mercado Pago ✔';
+  const c=dados.cartao;
+  return `Cartão pelo site — ${c.band} final ${c.last4}, ${c.n}x de ${fmt(subtotal()/c.n)} (pagamento online em modo demonstração)`;
+}
+
+/* validação */
+const valida={
+  1(){
+    let ok=true;
+    const nome=document.getElementById('inNome').value.trim();
+    const fone=document.getElementById('inFone').value.replace(/\D/g,'');
+    document.getElementById('cNome').classList.toggle('invalido',!nome); if(!nome)ok=false;
+    document.getElementById('cFone').classList.toggle('invalido',fone.length<10); if(fone.length<10)ok=false;
+    if(ok){dados.nome=nome;dados.fone=document.getElementById('inFone').value.trim()}
+    return ok;
+  },
+  2(){
+    if(dados.entrega==='retirada')return true;
+    let ok=true;
+    const marca=(id,bad)=>{document.getElementById(id).classList.toggle('invalido',bad);if(bad)ok=false};
+    const cep=inCep.value.replace(/\D/g,'');
+    const rua=inRua.value.trim(), num=inNum.value.trim();
+    const bai=inBairro.value.trim(), cid=inCidade.value.trim();
+    marca('cCep',cep.length!==8);
+    marca('cRua',!rua);
+    marca('cNum',!num);
+    marca('cBairro',!bai);
+    marca('cCidade',!cid);
+    if(ok){
+      const compl=inCompl.value.trim(), ref=inRef.value.trim();
+      dados.endereco=`${rua}, nº ${num}${compl?` (${compl})`:''} — ${bai}, ${cid} · CEP ${inCep.value}${ref?` · Ref.: ${ref}`:''}`;
+    }
+    return ok;
+  },
+  3(){
+    if(dados.pag!=='Online'||MP.backend)return true;
+    let ok=true;
+    const num=inNumero.value.replace(/\D/g,'');
+    const nome=inNomeCard.value.trim();
+    const val=inValidade.value;
+    const cvv=inCvv.value;
+    document.getElementById('cNumero').classList.toggle('invalido',!luhn(num)); if(!luhn(num))ok=false;
+    document.getElementById('cNomeCard').classList.toggle('invalido',nome.length<3); if(nome.length<3)ok=false;
+    document.getElementById('cValidade').classList.toggle('invalido',!validadeOk(val)); if(!validadeOk(val))ok=false;
+    document.getElementById('cCvv').classList.toggle('invalido',cvv.length<3); if(cvv.length<3)ok=false;
+    if(ok)dados.cartao={band:bandeira(num)||'Cartão',last4:num.slice(-4),n:+selParcelas.value};
+    return ok;
+  },
+};
+
+function montaRevisao(){
+  document.getElementById('revItens').innerHTML=carrinho.map(i=>
+    `<div class="rev-item"><span>${i.qty}× ${i.nome}</span><span>${fmt(i.preco*i.qty)}</span></div>`).join('');
+  document.getElementById('revInfo').innerHTML=
+    `<strong style="color:var(--creme)">${dados.nome}</strong> · ${dados.fone}<br>`+
+    (dados.entrega==='retirada'
+      ?'Retirada na loja — Q. 104 Sul, Av. NS 4, nº 41, Sala 05'
+      :`Entrega em Palmas — ${dados.endereco}<br><em style="color:var(--ouro-escuro)">Taxa de entrega combinada pelo WhatsApp.</em>`)+
+    `<br>Pagamento: ${pagLabel()}`;
+  document.getElementById('revTotalLbl').textContent=dados.entrega==='entrega'?'Total dos itens (sem taxa)':'Total dos itens';
+  document.getElementById('revTotal').textContent=fmt(subtotal());
+}
+
+function mensagemWhats(){
+  const linhas=carrinho.map(i=>`▸ ${i.qty}x ${i.nome} — ${fmt(i.preco*i.qty)}`).join('\n');
+  return [
+    '*NOVO PEDIDO — BAZAR OHKUBO* ✦',
+    '',
+    '*Itens:*', linhas,
+    '',
+    `*Total dos itens:* ${fmt(subtotal())}`,
+    `*Recebimento:* ${dados.entrega==='retirada'?'Retirada na loja':'Entrega em Palmas'}`,
+    ...(dados.entrega==='entrega'?[`*Endereço:* ${dados.endereco}`,'_Taxa de entrega a combinar._']:[]),
+    `*Pagamento:* ${pagWhats()}`,
+    '',
+    `*Cliente:* ${dados.nome}`,
+    `*Contato:* ${dados.fone}`,
+    '',
+    '_Pedido feito pelo site._'
+  ].join('\n');
+}
+
+/* registra o pedido na Área de Pedidos do painel (silencioso se não houver backend) */
+function registraPedido(pagamentoTxt){
+  try{
+    fetch(API.pedidos,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        itens:carrinho.map(i=>({id:i.id,nome:i.nome,qty:i.qty,preco:i.preco})),
+        cliente:{nome:dados.nome,fone:dados.fone},
+        entrega:dados.entrega,
+        endereco:dados.endereco||'',
+        pagamento:pagamentoTxt,
+        total:subtotal()
+      })}).catch(()=>{});
+  }catch(e){}
+}
+
+btnAvancar.addEventListener('click',()=>{
+  if(passo<4){
+    if(valida[passo]())mostraPasso(passo+1);
+    return;
+  }
+  /* passo 4 → envia */
+  const msg=mensagemWhats();
+  const finaliza=()=>{
+    registraPedido(pagWhats());
+    window.open(`https://wa.me/556332151718?text=${encodeURIComponent(msg)}`,'_blank');
+    document.getElementById('sucExtra').textContent=
+      (dados.pag==='Online'&&!MP.backend)
+        ?`Pagamento aprovado ✓ ${dados.cartao.band} •••• ${dados.cartao.last4} · ${dados.cartao.n}x — demonstração, sem cobrança real.`
+        :'';
+    mostraPasso(5);
+    carrinho=[]; sync();
+  };
+  if(dados.pag==='Online'&&MP.backend){pagarMercadoPago(msg);return}
+  if(dados.pag==='Online'){ /* demonstração */
+    const proc=document.getElementById('processing');
+    btnAvancar.disabled=true;
+    proc.classList.add('on');
+    setTimeout(()=>{
+      proc.classList.remove('on');
+      btnAvancar.disabled=false;
+      finaliza();
+    },2000);
+  }else finaliza();
+});
+btnVoltar.addEventListener('click',()=>{if(passo>1)mostraPasso(passo-1)});
+
+/* ===== Mercado Pago: cria a preferência e redireciona ===== */
+async function pagarMercadoPago(msg){
+  const proc=document.getElementById('processing');
+  const procTxt=proc.querySelector('p');
+  procTxt.textContent='Conectando ao Mercado Pago…';
+  btnAvancar.disabled=true;
+  proc.classList.add('on');
+  try{
+    const r=await fetch(MP.backend,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        itens:carrinho.map(i=>({id:i.id,qty:i.qty})),
+        cliente:{nome:dados.nome,fone:dados.fone},
+        entrega:dados.entrega,
+        endereco:dados.endereco||''
+      })
+    });
+    const d=await r.json();
+    if(!r.ok||!d.init_point)throw new Error(d.erro||'preferência');
+    registraPedido('Mercado Pago — aguardando pagamento');
+    try{sessionStorage.setItem('pedidoPendente',msg)}catch(e){}
+    location.href=d.init_point; /* checkout seguro do Mercado Pago */
+  }catch(e){
+    proc.classList.remove('on');
+    btnAvancar.disabled=false;
+    procTxt.textContent='Processando pagamento…';
+    toast('Não foi possível iniciar o pagamento. Tente de novo.');
+  }
+}
+
+/* ===== retorno do Mercado Pago (back_urls) ===== */
+(function(){
+  const q=new URLSearchParams(location.search);
+  const st=q.get('pagamento'); if(!st)return;
+  const pid=q.get('payment_id')||q.get('collection_id')||'';
+  let pedido=''; try{pedido=sessionStorage.getItem('pedidoPendente')||''}catch(e){}
+  const banner=document.getElementById('mpBanner');
+  const txt=document.getElementById('mpBannerTxt');
+  const btn=document.getElementById('mpBannerBtn');
+  banner.classList.add('on');
+  if(st==='sucesso'){
+    txt.innerHTML='<strong>Pagamento aprovado!</strong> Envie o pedido para a loja confirmar a entrega/retirada.';
+    btn.style.display='inline-flex';
+    btn.onclick=()=>{
+      const msg=(pedido||'*PEDIDO PAGO — BAZAR OHKUBO* ✦')+(pid?`\n*Comprovante Mercado Pago:* ${pid}`:'');
+      window.open(`https://wa.me/556332151718?text=${encodeURIComponent(msg)}`,'_blank');
+      try{sessionStorage.removeItem('pedidoPendente')}catch(e){}
+    };
+  }else if(st==='pendente'){
+    txt.innerHTML='<strong>Pagamento em análise.</strong> Assim que o Mercado Pago confirmar, você recebe a notificação. Qualquer dúvida, chame a loja no WhatsApp.';
+  }else{
+    txt.innerHTML='<strong>Pagamento não concluído.</strong> Nenhum valor foi cobrado — você pode tentar novamente pelo carrinho.';
+  }
+  document.getElementById('mpBannerX').onclick=()=>banner.classList.remove('on');
+  history.replaceState({},'',location.pathname);
+})();
+
+</script>
+</body>
+</html>
