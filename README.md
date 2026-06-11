@@ -1,4 +1,4 @@
-# # Bazar Ohkubo
+# Bazar Ohkubo
 
 Site oficial do Bazar Ohkubo desenvolvido para apresentar produtos, realizar pedidos e integrar pagamentos através do Mercado Pago.
 
