@@ -125,7 +125,6 @@ h2{font-family:var(--display);font-weight:400;font-size:1.5rem;margin-bottom:6px
 .ped-top .data{font-size:.68rem;letter-spacing:.14em;color:var(--creme2)}
 .badge{font-size:.56rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:5px 12px;border-radius:100px;border:1px solid}
 .badge.novo{color:var(--ouro-claro);border-color:var(--ouro);box-shadow:0 0 12px rgba(212,164,55,.35)}
-.badge.aguardando-pagamento{color:var(--alerta);border-color:var(--alerta)}
 .badge.confirmado{color:#9FD49A;border-color:#5d8a58}
 .badge.entregue{color:var(--creme2);border-color:rgba(212,164,55,.35)}
 .badge.cancelado{color:#c98484;border-color:#7a4646}
@@ -157,6 +156,9 @@ h2{font-family:var(--display);font-weight:400;font-size:1.5rem;margin-bottom:6px
 .m-rodape{display:flex;gap:12px;margin-top:26px}
 .m-rodape .btn{flex:1}
 .check{display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--creme2);cursor:pointer;padding-top:26px}
+
+.eq-row{display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(212,164,55,.16);background:var(--preto2);padding:13px 18px;margin-bottom:8px;font-size:.86rem}
+.eq-row b{font-family:var(--display);color:var(--ouro-claro);font-weight:400}
 
 /* toast */
 .toast-zone{position:fixed;bottom:22px;left:22px;right:22px;z-index:140;display:flex;flex-direction:column;gap:10px;pointer-events:none;align-items:flex-start}
@@ -215,6 +217,7 @@ h2{font-family:var(--display);font-weight:400;font-size:1.5rem;margin-bottom:6px
     <button class="tab on" data-aba="dash">Dashboard</button>
     <button class="tab" data-aba="produtos">Produtos &amp; Estoque</button>
     <button class="tab" data-aba="pedidos">Pedidos</button>
+    <button class="tab" data-aba="equipe">Equipe</button>
   </nav>
 
   <main>
@@ -228,6 +231,9 @@ h2{font-family:var(--display);font-weight:400;font-size:1.5rem;margin-bottom:6px
         <div class="stat"><div class="num" id="stAtivos">0</div><div class="lbl">Produtos ativos</div></div>
         <div class="stat warn"><div class="num" id="stBaixo">0</div><div class="lbl">Estoque baixo (≤3)</div></div>
       </div>
+      <h2 style="font-size:1.15rem">Em atendimento por pessoa</h2>
+      <p class="sub">Pedidos abertos (novos ou confirmados) e quem está cuidando de cada um.</p>
+      <div id="dashEquipe" style="margin-bottom:30px"></div>
       <h2 style="font-size:1.15rem">Últimos pedidos</h2>
       <p class="sub">Os 5 mais recentes — gerencie na aba Pedidos.</p>
       <div id="dashPedidos"></div>
@@ -250,6 +256,16 @@ h2{font-family:var(--display);font-weight:400;font-size:1.5rem;margin-bottom:6px
       <p class="sub">Pedidos do site em tempo real. Atualize o status e confirme com o cliente pelo WhatsApp.</p>
       <div class="filtros-ped" id="filtrosPed"></div>
       <div id="listaPedidos"></div>
+    </section>
+    <!-- EQUIPE -->
+    <section class="painel" id="painel-equipe">
+      <h2>Equipe de atendimento</h2>
+      <p class="sub">Cadastre quem atende no WhatsApp da loja. Cada pedido pode receber um responsável, e as mensagens enviadas pelo painel saem assinadas com o nome do atendente.</p>
+      <div class="toolbar">
+        <input type="text" id="inAtt" placeholder="Nome do atendente…" maxlength="60">
+        <button class="btn btn-gold" id="btnAddAtt">+ Adicionar</button>
+      </div>
+      <div id="listaEquipe"></div>
     </section>
   </main>
 </div>
@@ -281,11 +297,11 @@ h2{font-family:var(--display);font-weight:400;font-size:1.5rem;margin-bottom:6px
 <div class="toast-zone" id="toastZone"></div>
 
 <script>
-const API={produtos:'/api/produtos',pedidos:'/api/pedidos'};
+const API={produtos:'/api/produtos',pedidos:'/api/pedidos',atendentes:'/api/atendentes'};
 const $=id=>document.getElementById(id);
 const fmt=v=>(+v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const STATUS={'novo':'Novo','aguardando-pagamento':'Aguardando pagamento','confirmado':'Confirmado','entregue':'Entregue','cancelado':'Cancelado'};
-let CHAVE='',PRODS=[],PEDS=[],aba='dash',filtroPed='todos',editandoId=null,iconeSel='';
+const STATUS={'novo':'Novo','confirmado':'Confirmado','entregue':'Entregue','cancelado':'Cancelado'};
+let CHAVE='',PRODS=[],PEDS=[],ATTS=[],aba='dash',filtroPed='todos',filtroAtt='todos',editandoId=null,iconeSel='';
 
 /* gradiente para os SVGs dos produtos */
 document.body.insertAdjacentHTML('afterbegin','<svg width="0" height="0" aria-hidden="true" style="position:fixed;left:-9999px"><defs><linearGradient id="gradOuro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0CE6B"/><stop offset=".55" stop-color="#D4A437"/><stop offset="1" stop-color="#8C6B1E"/></linearGradient></defs></svg>');
@@ -316,15 +332,16 @@ try{const s=sessionStorage.getItem('bzChave');if(s)tentaLogin(s)}catch(e){}
 
 /* ===== DADOS ===== */
 async function carregaTudo(){
-  const[rp,rd]=await Promise.all([req(API.produtos),req(API.pedidos)]);
+  const[rp,rd,ra]=await Promise.all([req(API.produtos),req(API.pedidos),req(API.atendentes)]);
   if(rp.ok)PRODS=await rp.json();
   if(rd.ok)PEDS=await rd.json();
+  if(ra.ok)ATTS=await ra.json();
   renderTudo();
 }
 $('btnAtualizar').onclick=()=>{carregaTudo();toast('Dados atualizados')};
 setInterval(()=>{if(CHAVE&&aba==='pedidos')carregaTudo()},60000);
 
-function renderTudo(){renderDash();renderProdutos();renderPedidos()}
+function renderTudo(){renderDash();renderProdutos();renderPedidos();renderEquipe()}
 
 /* ===== ABAS ===== */
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
@@ -336,12 +353,18 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
 /* ===== DASHBOARD ===== */
 function renderDash(){
   $('dashData').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  $('stNovos').textContent=PEDS.filter(p=>p.status==='novo'||p.status==='aguardando-pagamento').length;
+  $('stNovos').textContent=PEDS.filter(p=>p.status==='novo').length;
   const hoje=new Date().toDateString();
   $('stHoje').textContent=fmt(PEDS.filter(p=>new Date(p.criadoEm).toDateString()===hoje&&p.status!=='cancelado').reduce((s,p)=>s+(+p.total||0),0));
   $('stAtivos').textContent=PRODS.filter(p=>p.ativo!==false).length;
   $('stBaixo').textContent=PRODS.filter(p=>typeof p.estoque==='number'&&p.estoque<=3).length;
   $('dashPedidos').innerHTML=PEDS.slice(0,5).map(cardPedido).join('')||'<div class="vazio">Nenhum pedido ainda — eles aparecem aqui assim que chegarem pelo site. ✦</div>';
+  const abertos=PEDS.filter(p=>p.status==='novo'||p.status==='confirmado');
+  const porAtt={};
+  abertos.forEach(p=>{const a=p.atendente||'Sem responsável';porAtt[a]=(porAtt[a]||0)+1});
+  $('dashEquipe').innerHTML=Object.keys(porAtt).length
+    ?Object.entries(porAtt).sort((a,b)=>b[1]-a[1]).map(([a,n])=>`<div class="eq-row"><span>${esc(a)}</span><b>${n} pedido${n>1?'s':''}</b></div>`).join('')
+    :'<div class="vazio" style="padding:18px">Nenhum pedido em atendimento agora.</div>';
 }
 
 /* ===== PRODUTOS ===== */
@@ -428,24 +451,28 @@ $('mSalvar').onclick=async()=>{
 };
 
 /* ===== PEDIDOS ===== */
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function cardPedido(p){
   const fone=String(p.cliente?.fone||'').replace(/\D/g,'');
-  const wa=fone?`https://wa.me/${fone.length<=11?'55'+fone:fone}?text=${encodeURIComponent(`Olá, ${p.cliente.nome}! Aqui é do Bazar Ohkubo ✦ Recebemos seu pedido ${p.numero} e já estamos cuidando dele.`)}`:'';
+  const ass=p.atendente?`${p.atendente} do `:'';
+  const msgWa=`Olá, ${p.cliente?.nome||''}! Aqui é ${ass}Bazar Ohkubo ✦ Recebemos seu pedido ${p.numero} e já estamos cuidando dele.${p.atendente?`\n\n— *${p.atendente}* · Bazar Ohkubo`:''}`;
+  const wa=fone?`https://wa.me/${fone.length<=11?'55'+fone:fone}?text=${encodeURIComponent(msgWa)}`:'';
   return `<div class="pedido" data-num="${p.numero}">
     <div class="ped-top">
       <div><span class="num">${p.numero}</span> <span class="data">· ${new Date(p.criadoEm).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</span></div>
       <span class="badge ${p.status}">${STATUS[p.status]||p.status}</span>
     </div>
     <div class="ped-info">
-      <b>${p.cliente?.nome||''}</b> · ${p.cliente?.fone||''}<br>
-      ${p.entrega==='entrega'?('Entrega — '+(p.endereco||'')):'Retirada na loja'}<br>
-      Pagamento: ${p.pagamento||'—'}
+      <b>${esc(p.cliente?.nome)}</b> · ${esc(p.cliente?.fone)}<br>
+      ${p.entrega==='entrega'?('Entrega — '+esc(p.endereco)):'Retirada na loja'}<br>
+      Pagamento: ${esc(p.pagamento)||'—'}${p.alertaPagamento?` · <span style="color:var(--alerta)">${esc(p.alertaPagamento)}</span>`:''}
     </div>
-    <div class="ped-itens">${(p.itens||[]).map(i=>`<div class="ped-item"><span>${i.qty}× ${i.nome}</span><span>${fmt(i.preco*i.qty)}</span></div>`).join('')}</div>
+    <div class="ped-itens">${(p.itens||[]).map(i=>`<div class="ped-item"><span>${i.qty}× ${esc(i.nome)}</span><span>${fmt(i.preco*i.qty)}</span></div>`).join('')}</div>
     <div class="ped-rodape">
       <span class="ped-total">${fmt(p.total)}</span>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
         ${wa?`<a class="btn btn-line" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>`:''}
+        <select data-att title="Atendente responsável"><option value="">Atendente…</option>${ATTS.map(a=>`<option${a===p.atendente?' selected':''}>${esc(a)}</option>`).join('')}</select>
         <select data-status>${Object.entries(STATUS).map(([v,l])=>`<option value="${v}"${v===p.status?' selected':''}>${l}</option>`).join('')}</select>
       </div>
     </div>
@@ -453,8 +480,12 @@ function cardPedido(p){
 }
 function renderPedidos(){
   const chips=['todos',...Object.keys(STATUS)];
-  $('filtrosPed').innerHTML=chips.map(c=>`<button class="chip${c===filtroPed?' on':''}" data-f="${c}">${c==='todos'?'Todos':STATUS[c]}</button>`).join('');
-  const lista=filtroPed==='todos'?PEDS:PEDS.filter(p=>p.status===filtroPed);
+  $('filtrosPed').innerHTML=chips.map(c=>`<button class="chip${c===filtroPed?' on':''}" data-f="${c}">${c==='todos'?'Todos':STATUS[c]}</button>`).join('')
+    +`<select id="selFiltroAtt" style="width:auto;padding:8px 32px 8px 12px;font-size:.74rem"><option value="todos">Todos os atendentes</option><option value="sem"${filtroAtt==='sem'?' selected':''}>Sem responsável</option>${ATTS.map(a=>`<option${a===filtroAtt?' selected':''}>${esc(a)}</option>`).join('')}</select>`;
+  $('selFiltroAtt').onchange=e=>{filtroAtt=e.target.value;renderPedidos()};
+  let lista=filtroPed==='todos'?PEDS:PEDS.filter(p=>p.status===filtroPed);
+  if(filtroAtt==='sem')lista=lista.filter(p=>!p.atendente);
+  else if(filtroAtt!=='todos')lista=lista.filter(p=>p.atendente===filtroAtt);
   $('listaPedidos').innerHTML=lista.map(cardPedido).join('')||'<div class="vazio">Nenhum pedido neste filtro.</div>';
 }
 $('filtrosPed').addEventListener('click',e=>{
@@ -462,12 +493,47 @@ $('filtrosPed').addEventListener('click',e=>{
   filtroPed=c.dataset.f;renderPedidos();
 });
 document.addEventListener('change',async e=>{
-  const sel=e.target.closest('[data-status]');if(!sel)return;
+  const selSt=e.target.closest('[data-status]');
+  const selAt=e.target.closest('[data-att]');
+  if(!selSt&&!selAt)return;
   const num=e.target.closest('.pedido').dataset.num;
-  const r=await req(API.pedidos,{method:'PUT',body:JSON.stringify({numero:num,status:sel.value})});
-  if(r.ok){const p=PEDS.find(x=>x.numero===num);if(p)p.status=sel.value;renderPedidos();renderDash();toast('Status atualizado: '+STATUS[sel.value])}
-  else toast('Falha ao atualizar status');
+  const corpo=selSt?{numero:num,status:selSt.value}:{numero:num,atendente:selAt.value};
+  const r=await req(API.pedidos,{method:'PUT',body:JSON.stringify(corpo)});
+  if(r.ok){
+    const p=PEDS.find(x=>x.numero===num);
+    if(p){if(selSt)p.status=selSt.value;else p.atendente=selAt.value}
+    renderPedidos();renderDash();
+    toast(selSt?('Status atualizado: '+STATUS[selSt.value]):(selAt.value?('Pedido atribuído a '+selAt.value):'Responsável removido'));
+  }else toast('Falha ao atualizar pedido');
+});
+
+/* ===== EQUIPE ===== */
+function renderEquipe(){
+  $('listaEquipe').innerHTML=ATTS.map((a,i)=>`<div class="linha" style="grid-template-columns:42px 1fr auto">
+    <div class="thumb" style="width:42px;height:42px;font-family:var(--display);color:var(--ouro-claro)">${esc((a[0]||'?').toUpperCase())}</div>
+    <div class="l-info"><h4>${esc(a)}</h4><div class="meta">Atendente</div></div>
+    <div class="acoes"><button class="ico" data-rmatt="${i}" title="Remover">✕</button></div>
+  </div>`).join('')||'<div class="vazio">Nenhum atendente cadastrado — adicione acima para começar a atribuir pedidos. ✦</div>';
+}
+async function salvaEquipe(){
+  const r=await req(API.atendentes,{method:'PUT',body:JSON.stringify({lista:ATTS})});
+  if(r.ok){ATTS=await r.json();toast('Equipe salva')}else toast('Falha ao salvar equipe');
+  renderEquipe();renderPedidos();
+}
+$('btnAddAtt').onclick=()=>{
+  const v=$('inAtt').value.trim();
+  if(!v)return;
+  if(ATTS.some(a=>a.toLowerCase()===v.toLowerCase()))return toast('Atendente já cadastrado');
+  ATTS.push(v);$('inAtt').value='';salvaEquipe();
+};
+$('inAtt').addEventListener('keydown',e=>{if(e.key==='Enter')$('btnAddAtt').click()});
+$('listaEquipe').addEventListener('click',e=>{
+  const b=e.target.closest('[data-rmatt]');if(!b)return;
+  const a=ATTS[+b.dataset.rmatt];
+  if(!confirm(`Remover ${a} da equipe? Os pedidos já atribuídos mantêm o nome no histórico.`))return;
+  ATTS.splice(+b.dataset.rmatt,1);salvaEquipe();
 });
 </script>
 </body>
 </html>
+        
