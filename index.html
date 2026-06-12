@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
 <title>Bazar Ohkubo — Cosméticos e Bijouterias | Palmas-TO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,7 +60,7 @@ h2{
 }
 h2 em{font-style:normal;color:var(--ouro);text-shadow:0 0 30px rgba(212,164,55,.4)}
 .section{padding:120px 0;position:relative}
-.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1)}
+.js .reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1)}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none}
@@ -838,6 +839,12 @@ body.lock{overflow:hidden}
     </div>
     <div class="filtros reveal" id="filtros" aria-label="Filtrar por categoria"></div>
     <div class="prod-grid" id="prodGrid"></div>
+    <noscript>
+      <p style="margin-top:30px;border:1px solid rgba(212,164,55,.4);padding:18px 22px;color:#B9AC8C;font-size:.9rem;line-height:1.7">
+        O catálogo interativo precisa de JavaScript para carregar. Você pode falar direto com a loja pelo
+        <a href="https://wa.me/556332151718" style="color:#F0CE6B">WhatsApp</a>.
+      </p>
+    </noscript>
   </div>
 </section>
 
