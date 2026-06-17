@@ -6,33 +6,45 @@
    Este arquivo é referenciado no fim do <body> do index.html.
 ===================================================================== */
 
-/* ===== luz dourada que segue o cursor ===== */
+/* Detecta aparelhos sem mouse / com pouca capacidade → desliga efeitos caros */
+const TEM_MOUSE=matchMedia('(hover:hover) and (pointer:fine)').matches;
+const POUCA_MEMORIA=(navigator.deviceMemory&&navigator.deviceMemory<=4)||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
+const MOVIMENTO_OK=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EFEITOS_PESADOS=TEM_MOUSE && MOVIMENTO_OK && !POUCA_MEMORIA;
+
+/* ===== luz dourada que segue o cursor (só desktop) ===== */
 const luz=document.getElementById('cursorLight');
-let lx=innerWidth/2, ly=innerHeight/2, tx=lx, ty=ly;
-addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY},{passive:true});
-(function animaLuz(){
-  lx+=(tx-lx)*.08; ly+=(ty-ly)*.08;
-  luz.style.left=lx+'px'; luz.style.top=ly+'px';
-  requestAnimationFrame(animaLuz);
-})();
+if(luz && TEM_MOUSE && MOVIMENTO_OK){
+  let lx=innerWidth/2, ly=innerHeight/2, tx=lx, ty=ly, ativo=false;
+  addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;ativo=true},{passive:true});
+  (function animaLuz(){
+    if(ativo){
+      lx+=(tx-lx)*.08; ly+=(ty-ly)*.08;
+      luz.style.transform=`translate(${lx}px,${ly}px)`;
+    }
+    requestAnimationFrame(animaLuz);
+  })();
+}else if(luz){luz.style.display='none'}
 
-/* ===== luz interativa dentro dos cards ===== */
-document.querySelectorAll('.card-luz').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    card.style.setProperty('--mx',(e.clientX-r.left)+'px');
-    card.style.setProperty('--my',(e.clientY-r.top)+'px');
-  },{passive:true});
-});
+/* ===== luz interativa dentro dos cards (só desktop) ===== */
+if(TEM_MOUSE){
+  document.querySelectorAll('.card-luz').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+      card.style.setProperty('--my',(e.clientY-r.top)+'px');
+    },{passive:true});
+  });
+}
 
-/* ===== partículas douradas no hero ===== */
+/* ===== partículas douradas no hero (só desktop capaz) ===== */
 const cv=document.getElementById('particles');
-if(cv && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+if(cv && EFEITOS_PESADOS){
   const ctx=cv.getContext('2d');
   let W,H,ps=[];
   function resize(){
     W=cv.width=cv.offsetWidth; H=cv.height=cv.offsetHeight;
-    ps=Array.from({length:Math.min(70,W/16)},()=>({
+    ps=Array.from({length:Math.min(48,Math.round(W/26))},()=>({
       x:Math.random()*W, y:Math.random()*H,
       r:Math.random()*1.6+.4,
       vx:(Math.random()-.5)*.18, vy:-(Math.random()*.3+.08),
@@ -40,23 +52,29 @@ if(cv && !matchMedia('(prefers-reduced-motion: reduce)').matches){
     }));
   }
   resize(); addEventListener('resize',resize,{passive:true});
+  /* só anima enquanto o hero estiver visível */
+  let visivel=true;
+  const hero=document.querySelector('.hero');
+  if(hero&&'IntersectionObserver'in window){
+    new IntersectionObserver(es=>{visivel=es[0].isIntersecting},{threshold:0}).observe(hero);
+  }
   (function tick(t){
-    ctx.clearRect(0,0,W,H);
-    for(const p of ps){
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.y<-10){p.y=H+10;p.x=Math.random()*W}
-      if(p.x<-10)p.x=W+10; if(p.x>W+10)p.x=-10;
-      const tw=p.a*(0.55+0.45*Math.sin(t/700+p.fase));
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(212,164,55,${tw})`;
-      ctx.shadowColor='rgba(212,164,55,.8)';
-      ctx.shadowBlur=8;
-      ctx.fill();
+    if(visivel){
+      ctx.clearRect(0,0,W,H);
+      for(const p of ps){
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.y<-10){p.y=H+10;p.x=Math.random()*W}
+        if(p.x<-10)p.x=W+10; if(p.x>W+10)p.x=-10;
+        const tw=p.a*(0.55+0.45*Math.sin(t/700+p.fase));
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=`rgba(240,206,107,${tw})`;
+        ctx.fill();
+      }
     }
     requestAnimationFrame(tick);
   })(0);
-}
+}else if(cv){cv.style.display='none'}
 
 /* ===== nav / menu / marquee / reveal ===== */
 const nav=document.getElementById('nav');
