@@ -39,11 +39,9 @@ body{
 
 /* ============ LUZ QUE SEGUE O CURSOR ============ */
 #cursorLight{
-  position:fixed;top:0;left:0;width:520px;height:520px;
-  pointer-events:none;z-index:1;
+  position:fixed;top:0;left:0;width:520px;height:520px;margin:-260px 0 0 -260px;
+  pointer-events:none;z-index:1;will-change:transform;
   background:radial-gradient(circle,rgba(212,164,55,.09) 0%,rgba(212,164,55,.03) 40%,transparent 70%);
-  transform:translate(-50%,-50%);
-  transition:opacity .4s;
 }
 @media (hover:none){#cursorLight{display:none}}
 
@@ -768,6 +766,18 @@ body.lock{overflow:hidden}
   .nav-mobile a:hover{color:var(--ouro)}
   .section{padding:76px 0}
   .insta-frame{padding:54px 26px}
+
+  /* ===== desempenho no celular: cortar efeitos caros ===== */
+  nav.scrolled{backdrop-filter:none;background:rgba(7,5,3,.96)}
+  .hero-rating{backdrop-filter:none;background:rgba(14,11,7,.85)}
+  .overlay{backdrop-filter:none;background:rgba(4,3,1,.82)}
+  .nav-mobile{backdrop-filter:none;background:rgba(7,5,3,.99)}
+  .hero::before{display:none}            /* malha animada de fundo */
+  .hero-aura{animation:none;opacity:.7}  /* aura para de pulsar */
+  .marca .selo{animation:subir .8s 1.35s both}  /* sem pulso contínuo */
+  .whats-float{animation:none}
+  .orbita-1,.orbita-2{animation:revelaOrbita .9s 1.1s forwards}  /* sem rotação contínua */
+  .card-luz::before{display:none}        /* brilho que seguiria o mouse */
 }
 @media(max-width:380px){
   .marca-spiral{width:84px;height:84px}
