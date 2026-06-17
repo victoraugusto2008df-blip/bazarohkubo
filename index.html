@@ -66,6 +66,9 @@ h2 em{font-style:normal;color:var(--ouro);text-shadow:0 0 30px rgba(212,164,55,.
   .reveal{opacity:1;transform:none;transition:none}
   *{animation:none!important;transition:none!important}
   #cursorLight,#particles{display:none}
+  .marca-eyebrow,.marca h1 .w,.linha-dupla,.marca .sub,.hero-frase,.marca .selo,
+  .hero-rating,.hero-actions,.scroll-hint,.orbita{opacity:1!important}
+  .marca-spiral .traco{stroke-dashoffset:0!important}
 }
 
 /* ============ NAV ============ */
@@ -134,55 +137,101 @@ nav.scrolled{
   box-shadow:0 0 30px rgba(212,164,55,.35);
   opacity:.5;
 }
-#particles{position:absolute;inset:0;pointer-events:none}
+/* ====== AURA / BRILHO CENTRAL ====== */
+.hero-aura{
+  position:absolute;z-index:1;top:38%;left:50%;width:min(720px,120vw);aspect-ratio:1;
+  transform:translate(-50%,-50%);pointer-events:none;
+  background:radial-gradient(circle,rgba(212,164,55,.16),rgba(212,164,55,.05) 38%,transparent 66%);
+  animation:auraPulse 6s ease-in-out infinite;
+}
+@keyframes auraPulse{0%,100%{opacity:.65;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}}
+#particles{position:absolute;inset:0;pointer-events:none;z-index:1}
 
 /* ====== LOGO RECRIADO (fiel à marca) ====== */
-.hero-logo{position:relative;z-index:3;animation:heroIn 1.4s cubic-bezier(.22,1,.36,1) both}
+.hero-logo{position:relative;z-index:3}
 @keyframes heroIn{from{opacity:0;transform:translateY(40px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes subir{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 .marca{display:flex;flex-direction:column;align-items:center;gap:0}
-.marca-spiral{width:108px;height:108px;margin-bottom:8px;position:relative}
-.marca-spiral svg{width:100%;height:100%;overflow:visible}
+
+.marca-spiral{
+  width:120px;height:120px;margin-bottom:10px;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  animation:heroIn 1.2s cubic-bezier(.22,1,.36,1) both;
+}
+.marca-spiral .spiral-svg{width:88px;height:88px;overflow:visible;position:relative;z-index:2}
 .marca-spiral .traco{
   fill:none;stroke:url(#gradOuro);stroke-width:9;stroke-linecap:round;
   stroke-dasharray:1400;stroke-dashoffset:1400;
-  animation:desenha 2.6s .4s cubic-bezier(.4,0,.2,1) forwards;
+  animation:desenha 2.6s .35s cubic-bezier(.4,0,.2,1) forwards;
   filter:drop-shadow(0 0 14px rgba(212,164,55,.6));
 }
 @keyframes desenha{to{stroke-dashoffset:0}}
+/* anéis orbitais ao redor da espiral */
+.orbita{position:absolute;border-radius:50%;border:1px solid rgba(212,164,55,.22);opacity:0;animation:revelaOrbita .9s 1.1s forwards}
+.orbita-1{inset:-6px;animation-name:revelaOrbita,girar;animation-duration:.9s,18s;animation-delay:1.1s,1.1s;animation-timing-function:ease,linear;animation-iteration-count:1,infinite;animation-fill-mode:forwards,none}
+.orbita-1::after{content:'';position:absolute;top:-3px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--ouro-claro);box-shadow:0 0 10px var(--ouro)}
+.orbita-2{inset:-20px;border-style:dashed;border-color:rgba(212,164,55,.14);animation-name:revelaOrbita,girarInv;animation-duration:.9s,30s;animation-delay:1.2s,1.2s;animation-timing-function:ease,linear;animation-iteration-count:1,infinite;animation-fill-mode:forwards,none}
+@keyframes revelaOrbita{to{opacity:1}}
+@keyframes girar{to{transform:rotate(360deg)}}
+@keyframes girarInv{to{transform:rotate(-360deg)}}
+
+.marca-eyebrow{
+  font-size:clamp(.52rem,1.3vw,.64rem);font-weight:500;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--ouro-escuro);text-indent:.42em;margin-top:14px;
+  opacity:0;animation:subir .9s .95s both;
+}
 .marca h1{
   font-family:var(--display);font-weight:400;
-  font-size:clamp(3rem,9vw,5.6rem);
-  line-height:.96;letter-spacing:.02em;text-transform:uppercase;
-  background:linear-gradient(180deg,var(--ouro-vivo) 0%,var(--ouro) 52%,var(--ouro-escuro) 100%);
+  font-size:clamp(3.6rem,11vw,7rem);
+  line-height:.9;letter-spacing:.015em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;
+  background:linear-gradient(180deg,var(--ouro-vivo) 0%,var(--ouro-claro) 38%,var(--ouro) 70%,var(--ouro-escuro) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 4px 30px rgba(212,164,55,.3));
+  filter:drop-shadow(0 2px 18px rgba(212,164,55,.5)) drop-shadow(0 6px 44px rgba(212,164,55,.35));
 }
+.marca h1 .w{display:block;opacity:0;animation:subir 1s both}
+.marca h1 .w1{animation-delay:.45s}
+.marca h1 .w2{animation-delay:.6s}
+.linha-dupla{
+  display:flex;align-items:center;gap:14px;margin-top:18px;width:min(240px,60vw);
+  color:var(--ouro);font-size:.55rem;
+  opacity:0;animation:subir .9s 1s both;
+}
+.linha-dupla i{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(212,164,55,.45))}
+.linha-dupla i:last-child{background:linear-gradient(90deg,rgba(212,164,55,.45),transparent)}
+.linha-dupla span{text-shadow:0 0 12px rgba(212,164,55,.7);opacity:.8}
 .marca .sub{
-  margin-top:18px;
-  font-size:clamp(.62rem,1.6vw,.82rem);font-weight:400;
-  letter-spacing:.58em;text-transform:uppercase;color:var(--creme);
-  text-indent:.58em;
+  margin-top:16px;
+  font-size:clamp(.64rem,1.6vw,.82rem);font-weight:400;
+  letter-spacing:.46em;text-transform:uppercase;color:var(--creme2);
+  text-indent:.46em;
+  opacity:0;animation:subir .9s 1.05s both;
+}
+.hero-frase{
+  margin-top:16px;max-width:400px;
+  font-size:clamp(.86rem,2.3vw,.96rem);line-height:1.7;color:var(--creme2);font-weight:300;
+  opacity:0;animation:subir .9s 1.2s both;
 }
 .marca .selo{
-  margin-top:22px;
+  margin-top:26px;
   font-weight:600;font-size:.76rem;letter-spacing:.34em;text-transform:uppercase;text-indent:.34em;
   color:var(--preto);
   background:linear-gradient(180deg,var(--ouro-claro),var(--ouro));
   padding:9px 30px;border-radius:100px;
   box-shadow:0 0 26px rgba(212,164,55,.45);
-  animation:pulseSelo 3.4s ease-in-out infinite;
+  opacity:0;animation:subir .8s 1.35s both,pulseSelo 3.4s 2.2s ease-in-out infinite;
 }
 @keyframes pulseSelo{0%,100%{box-shadow:0 0 22px rgba(212,164,55,.35)}50%{box-shadow:0 0 44px rgba(212,164,55,.65)}}
 .hero-rating{
-  margin-top:40px;display:inline-flex;align-items:center;gap:14px;
+  margin-top:38px;display:inline-flex;align-items:center;gap:14px;
   border:1px solid rgba(212,164,55,.35);padding:13px 26px;border-radius:100px;
   background:rgba(14,11,7,.6);backdrop-filter:blur(8px);
   font-size:.82rem;letter-spacing:.08em;color:var(--creme2);
-  animation:heroIn 1.4s .5s both;
+  opacity:0;animation:subir .9s 1.5s both;
 }
 .hero-rating .nota{font-family:var(--display);font-size:1.25rem;color:var(--ouro-claro);text-shadow:0 0 18px rgba(212,164,55,.55)}
 .hero-rating .estrelas{color:var(--ouro);letter-spacing:3px;font-size:.85rem}
-.hero-actions{display:flex;gap:16px;justify-content:center;margin-top:36px;flex-wrap:wrap;animation:heroIn 1.4s .7s both}
+.hero-actions{display:flex;gap:16px;justify-content:center;margin-top:30px;flex-wrap:wrap;opacity:0;animation:subir .9s 1.65s both}
 .btn{
   font-family:var(--corpo);font-size:.74rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;
   padding:17px 38px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
@@ -202,7 +251,9 @@ nav.scrolled{
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;
   font-size:.6rem;letter-spacing:.44em;text-transform:uppercase;color:var(--creme2);
   display:flex;flex-direction:column;align-items:center;gap:10px;text-indent:.44em;
+  text-decoration:none;opacity:0;animation:subir 1s 2s both;transition:color .3s;
 }
+.scroll-hint:hover{color:var(--ouro-claro)}
 .scroll-hint::after{content:'';width:1px;height:46px;background:linear-gradient(var(--ouro),transparent);box-shadow:0 0 10px rgba(212,164,55,.6);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 
@@ -676,13 +727,19 @@ body.lock{overflow:hidden}
   .ck-progress .p{font-size:.5rem}
   .end-grid{grid-template-columns:1fr}
   .container{padding:0 20px}
-  .hero{padding:108px 0 84px}
-  .marca-spiral{width:82px;height:82px}
-  .hero-rating{flex-wrap:wrap;justify-content:center;row-gap:6px;padding:11px 18px;font-size:.74rem}
+  .hero{padding:100px 0 90px;min-height:100svh}
+  .hero-aura{top:34%;width:140vw}
+  .marca-spiral{width:96px;height:96px;margin-bottom:14px}
+  .marca-spiral .spiral-svg{width:68px;height:68px}
+  .orbita-2{inset:-14px}
+  .marca-eyebrow{margin-bottom:14px}
+  .hero-frase{max-width:340px}
+  .marca .selo{margin-top:22px}
+  .hero-rating{margin-top:30px;flex-wrap:wrap;justify-content:center;row-gap:6px;padding:11px 18px;font-size:.74rem}
   .hero-rating .nota{font-size:1.05rem}
-  .hero-actions{flex-direction:column;align-items:stretch;gap:12px}
-  .hero-actions .btn{justify-content:center;text-align:center}
-  .scroll-hint{display:none}
+  .hero-actions{flex-direction:column;align-items:stretch;gap:12px;width:100%;max-width:320px;margin-left:auto;margin-right:auto}
+  .hero-actions .btn{justify-content:center;text-align:center;padding:16px 28px}
+  .scroll-hint{bottom:20px}
   .filtros{flex-wrap:nowrap;overflow-x:auto;margin-left:-20px;margin-right:-20px;padding:0 20px 8px;scrollbar-width:none}
   .filtros::-webkit-scrollbar{display:none}
   .prod-grid{grid-template-columns:repeat(2,1fr);gap:13px}
@@ -711,6 +768,18 @@ body.lock{overflow:hidden}
   .nav-mobile a:hover{color:var(--ouro)}
   .section{padding:76px 0}
   .insta-frame{padding:54px 26px}
+}
+@media(max-width:380px){
+  .marca-spiral{width:84px;height:84px}
+  .marca-spiral .spiral-svg{width:60px;height:60px}
+  .marca h1{font-size:3.3rem}
+  .hero-frase{font-size:.84rem}
+  .marca .sub{letter-spacing:.34em}
+  .hero-rating{gap:9px;font-size:.68rem}
+  .linha-dupla{width:54vw}
+}
+@media(max-height:680px) and (min-width:641px){
+  .hero{min-height:auto;padding:130px 0 90px}
 }
 </style>
 </head>
@@ -769,28 +838,34 @@ body.lock{overflow:hidden}
 <!-- HERO — LOCKUP FIEL AO LOGO -->
 <header class="hero">
   <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="hero-aura" aria-hidden="true"></div>
   <div class="hero-logo container">
     <div class="marca">
       <div class="marca-spiral" aria-hidden="true">
-        <svg viewBox="0 0 100 100">
+        <div class="orbita orbita-1"></div>
+        <div class="orbita orbita-2"></div>
+        <svg class="spiral-svg" viewBox="0 0 100 100">
           <path class="traco" d="M50 50 m0 -3 a3 3 0 1 1 -0.1 0 M50 50 m0 -11 a11 11 0 1 1 -11 11 a19 19 0 1 0 19 -19 a27 27 0 1 1 -27 27 a35 35 0 1 0 35 -35 a43 43 0 1 1 -43 43"/>
         </svg>
       </div>
-      <h1>Bazar<br>Ohkubo</h1>
+      <h1><span class="w w1">Bazar</span><span class="w w2">Ohkubo</span></h1>
+      <div class="marca-eyebrow">Desde 1994 · Palmas, Tocantins</div>
+      <div class="linha-dupla" aria-hidden="true"><i></i><span>✦</span><i></i></div>
       <div class="sub">Cosméticos e Bijouterias</div>
+      <p class="hero-frase">Há 30 anos levando beleza, brilho e elegância acessível para Palmas — produtos selecionados a dedo para realçar o seu estilo.</p>
       <div class="selo">Palmas-TO</div>
     </div>
     <div class="hero-rating">
       <span class="nota">4.4</span>
       <span class="estrelas">★★★★☆</span>
-      <span>910 avaliações no Google</span>
+      <span class="rating-txt">910 avaliações no Google</span>
     </div>
     <div class="hero-actions">
       <a href="https://www.instagram.com/bazarohkubo" target="_blank" rel="noopener" class="btn btn-gold">Seguir no Instagram</a>
       <a href="#destaques" class="btn btn-ghost">Explorar a loja</a>
     </div>
   </div>
-  <div class="scroll-hint">Descubra</div>
+  <a href="#colecoes" class="scroll-hint" aria-label="Rolar para as coleções">Descubra</a>
 </header>
 
 <!-- MARQUEE -->
@@ -854,6 +929,7 @@ body.lock{overflow:hidden}
     <div class="reveal">
       <span class="eyebrow">Reputação comprovada</span>
       <h2>Quem conhece,<br><em>recomenda</em>.</h2>
+      <p style="margin-top:18px;max-width:480px;color:var(--creme2);line-height:1.7;font-size:.96rem">Três décadas de confiança construídas em Palmas, uma cliente de cada vez.</p>
     </div>
     <div class="google-band reveal">
       <div class="google-nota">
@@ -1140,6 +1216,6 @@ body.lock{overflow:hidden}
   <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.5-.6c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
 </a>
 
-<script src="js/app.js"></script>
+<script src="js/app.js" onerror="document.documentElement.classList.remove('js')"></script>
 </body>
 </html>
