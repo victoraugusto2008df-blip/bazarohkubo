@@ -69,6 +69,40 @@ h2 em{font-style:normal;color:var(--ouro);text-shadow:0 0 30px rgba(212,164,55,.
   .marca-spiral .traco{stroke-dashoffset:0!important}
 }
 
+/* =====================================================================
+   DESEMPENHO EM APARELHOS DE TOQUE (celular/tablet)
+   Mata tudo que pesa: blur em tempo real, animações infinitas de fundo,
+   drop-shadows múltiplos e brilhos que seguiriam o mouse. O visual segue
+   bonito (cores, gradientes e a entrada do hero permanecem).
+===================================================================== */
+@media (hover:none){
+  /* sem blur em tempo real (o efeito mais caro no mobile) */
+  nav.scrolled,.hero-rating,.overlay,.nav-mobile,.drawer,.ck-card{
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  }
+  nav.scrolled{background:rgba(7,5,3,.97)}
+  .hero-rating{background:rgba(14,11,7,.88)}
+  .overlay{background:rgba(4,3,1,.84)}
+  .nav-mobile{background:rgba(7,5,3,.99)}
+
+  /* sem animações infinitas de fundo/ornamento */
+  .hero::before,#particles,#cursorLight{display:none!important}
+  .hero-aura{animation:none!important;opacity:.6}
+  .marquee-track{animation:none!important;transform:none!important}
+  .orbita-1,.orbita-2{animation:revelaOrbita .9s 1.1s forwards!important}
+  .scroll-hint::after{animation:none!important}
+  .whats-float,.marca .selo,.insta-icon,.cat-icon,.check-anel,.cep-spin{
+    animation-iteration-count:1!important;
+  }
+
+  /* simplifica sombras/brilhos pesados */
+  .marca h1{filter:drop-shadow(0 2px 14px rgba(212,164,55,.45))}
+  .card-luz::before{display:none!important}
+
+  /* hover não existe em toque: zera transformações que ficariam "presas" */
+  .card-luz:active{transform:none}
+}
+
 /* ============ NAV ============ */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;
