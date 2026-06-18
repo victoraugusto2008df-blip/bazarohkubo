@@ -78,7 +78,11 @@ if(cv && EFEITOS_PESADOS){
 
 /* ===== nav / menu / marquee / reveal ===== */
 const nav=document.getElementById('nav');
-addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+let navTick=false;
+addEventListener('scroll',()=>{
+  if(navTick)return; navTick=true;
+  requestAnimationFrame(()=>{nav.classList.toggle('scrolled',scrollY>40);navTick=false});
+},{passive:true});
 
 const menuBtn=document.getElementById('menuBtn');
 const navMobile=document.getElementById('navMobile');
